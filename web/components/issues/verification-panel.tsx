@@ -127,37 +127,39 @@ export function VerificationPanel({
       </div>
 
       {/* Voting Buttons */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 gap-2.5">
         {/* Still Exists / Confirm */}
         <button
           type="button"
           onClick={() => handleVote("confirm")}
           disabled={isPending || Boolean(userVotedType)}
           className={cn(
-            "relative min-h-[48px] py-3.5 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer touch-manipulation active:scale-[0.98]",
+            "relative min-h-[52px] py-3 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer touch-manipulation active:scale-[0.98] w-full",
             userVotedType === "confirm"
               ? "clay-card bg-amber-500/20 border-amber-400 text-amber-300 shadow-md shadow-amber-500/15 ring-2 ring-amber-400/40"
               : "clay-btn-secondary hover:border-amber-500/40 text-slate-200 hover:text-white"
           )}
         >
-          <div className="flex items-center gap-2.5 text-left min-w-0">
-            {userVotedType === "confirm" ? (
-              <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-            ) : isPending ? (
-              <Loader2 className="w-4 h-4 text-amber-400 animate-spin shrink-0" />
-            ) : (
-              <ThumbsUp className="w-4 h-4 text-amber-400 shrink-0" />
-            )}
-            <div className="truncate">
-              <span className="block text-xs sm:text-sm font-bold truncate">
+          <div className="flex items-center gap-3 text-left">
+            <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center shrink-0">
+              {userVotedType === "confirm" ? (
+                <CheckCircle2 className="w-4 h-4 text-amber-400" />
+              ) : isPending ? (
+                <Loader2 className="w-4 h-4 text-amber-400 animate-spin" />
+              ) : (
+                <ThumbsUp className="w-4 h-4 text-amber-400" />
+              )}
+            </div>
+            <div>
+              <span className="block text-sm font-bold leading-tight">
                 {userVotedType === "confirm" ? "You Verified This" : "Still Exists"}
               </span>
-              <span className="text-[10px] text-slate-400 font-normal">
+              <span className="text-[11px] text-slate-400 font-normal leading-normal">
                 Confirm open hazard
               </span>
             </div>
           </div>
-          <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-xs font-mono font-bold text-amber-400 shrink-0 clay-pill">
+          <span className="px-2.5 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-xs font-mono font-bold text-amber-400 shrink-0 clay-pill">
             {confirmCount}
           </span>
         </button>
@@ -168,28 +170,30 @@ export function VerificationPanel({
           onClick={() => handleVote("dispute")}
           disabled={isPending || Boolean(userVotedType)}
           className={cn(
-            "relative min-h-[48px] py-3.5 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer touch-manipulation active:scale-[0.98]",
+            "relative min-h-[52px] py-3 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer touch-manipulation active:scale-[0.98] w-full",
             userVotedType === "dispute"
               ? "clay-card bg-rose-500/20 border-rose-400 text-rose-300 shadow-md shadow-rose-500/15 ring-2 ring-rose-400/40"
               : "clay-btn-secondary hover:border-slate-500 text-slate-300 hover:text-white"
           )}
         >
-          <div className="flex items-center gap-2.5 text-left min-w-0">
-            {userVotedType === "dispute" ? (
-              <CheckCircle2 className="w-4 h-4 text-rose-400 shrink-0" />
-            ) : (
-              <AlertCircle className="w-4 h-4 text-slate-400 shrink-0" />
-            )}
-            <div className="truncate">
-              <span className="block text-xs sm:text-sm font-bold truncate">
+          <div className="flex items-center gap-3 text-left">
+            <div className="w-8 h-8 rounded-xl bg-rose-500/15 border border-rose-500/25 flex items-center justify-center shrink-0">
+              {userVotedType === "dispute" ? (
+                <CheckCircle2 className="w-4 h-4 text-rose-400" />
+              ) : (
+                <AlertCircle className="w-4 h-4 text-slate-400" />
+              )}
+            </div>
+            <div>
+              <span className="block text-sm font-bold leading-tight">
                 {userVotedType === "dispute" ? "You Flagged This" : "Report Duplicate"}
               </span>
-              <span className="text-[10px] text-slate-400 font-normal">
+              <span className="text-[11px] text-slate-400 font-normal leading-normal">
                 Dispute or duplicate
               </span>
             </div>
           </div>
-          <span className="px-2.5 py-0.5 rounded-full bg-slate-800 border border-white/5 text-xs font-mono font-bold text-slate-300 shrink-0 clay-pill">
+          <span className="px-2.5 py-1 rounded-full bg-slate-800 border border-white/5 text-xs font-mono font-bold text-slate-300 shrink-0 clay-pill">
             {disputeCount}
           </span>
         </button>
