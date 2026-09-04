@@ -1,4 +1,5 @@
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { createVertex } from "@ai-sdk/google-vertex";
 import { generateObject } from "ai";
 import { z } from "zod";
 import { logger } from "@/lib/logger";
@@ -93,22 +94,102 @@ export function mapAIToFixSLPriority(aiPriority: string): "low" | "medium" | "hi
 }
 
 /**
- * Main service to analyze issue reports using Vercel AI SDK and Gemini Flash
+ * Returns a configured LanguageModel instance supporting either GCP Service Account
+ * (via Google Vertex AI) or Gemini API Key (via Google AI Studio).
  */
-export async function analyzeIssueWithAI(params: AnalyzeIssueParams): Promise<AnalyzeIssueResult> {
+function getLanguageModel(modelName: string) {
+  const saKeyFile = process.env.GOOGLE_APPLICATION_CREDENTIALS?.trim();
+  const saRawJson = (process.env.GCP_SERVICE_ACCOUNT_KEY || process.env.GOOGLE_CREDENTIALS)?.trim();
+  const clientEmail = process.env.GOOGLE_CLIENT_EMAIL?.trim();
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.trim();
+  const vertexProject = (
+    process.env.GOOGLE_VERTEX_PROJECT ||
+    process.env.GCP_PROJECT_ID ||
+    process.env.GOOGLE_CLOUD_PROJECT
+  )?.trim();
+  const vertexLocation = (
+    process.env.GOOGLE_VERTEX_LOCATION ||
+    process.env.GCP_LOCATION ||
+    "us-central1"
+  ).trim();
+
+  const isServiceAccountConfigured =
+    Boolean(saKeyFile) ||
+    Boolean(saRawJson) ||
+    (Boolean(clientEmail) && Boolean(privateKey)) ||
+    Boolean(vertexProject);
+
+  if (isServiceAccountConfigured) {
+    logger.info("Initializing Google Vertex AI provider with GCP Service Account", {
+      modelName,
+      location: vertexLocation,
+      hasKeyFile: Boolean(saKeyFile),
+      hasRawJson: Boolean(saRawJson),
+      hasEmailKey: Boolean(clientEmail && privateKey),
+    });
+
+    let credentials: Record<string, unknown> | undefined;
+
+    if (saRawJson) {
+      try {
+        credentials = JSON.parse(saRawJson);
+      } catch {
+        try {
+          const decoded = Buffer.from(saRawJson, "base64").toString("utf8");
+          credentials = JSON.parse(decoded);
+        } catch (e) {
+          logger.warn("Failed to parse GCP_SERVICE_ACCOUNT_KEY as JSON", {
+            error: e instanceof Error ? e.message : String(e),
+          });
+        }
+      }
+    } else if (clientEmail && privateKey) {
+      credentials = {
+        client_email: clientEmail,
+        private_key: privateKey.replace(/\\n/g, "\n"),
+      };
+    }
+
+    const projectId =
+      (credentials?.project_id as string) ||
+      vertexProject ||
+      undefined;
+
+    const vertex = createVertex({
+      project: projectId,
+      location: vertexLocation,
+      googleAuthOptions: {
+        ...(credentials ? { credentials } : {}),
+        ...(saKeyFile ? { keyFilename: saKeyFile } : {}),
+        ...(projectId ? { projectId } : {}),
+      },
+    });
+
+    return vertex(modelName);
+  }
+
+  // Fallback to Google AI Studio API key
   const apiKey =
     (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim()) ||
     (process.env.GOOGLE_GENERATIVE_AI_API_KEY && process.env.GOOGLE_GENERATIVE_AI_API_KEY.trim());
 
-  if (!apiKey) {
-    logger.warn("GEMINI_API_KEY not found or empty in environment variables");
-    throw new Error("GEMINI_API_KEY is not configured.");
+  if (apiKey) {
+    logger.info("Initializing Google AI Studio provider with GEMINI_API_KEY", {
+      modelName,
+    });
+    const google = createGoogleGenerativeAI({ apiKey });
+    return google(modelName);
   }
 
-  const google = createGoogleGenerativeAI({
-    apiKey,
-  });
+  throw new Error(
+    "No Google AI credentials configured. Please set GCP Service Account credentials (GOOGLE_APPLICATION_CREDENTIALS or GCP_SERVICE_ACCOUNT_KEY) or GEMINI_API_KEY."
+  );
+}
 
+/**
+ * Main service to analyze issue reports using Vercel AI SDK and Gemini Flash
+ */
+export async function analyzeIssueWithAI(params: AnalyzeIssueParams): Promise<AnalyzeIssueResult> {
   // Prepare multimodal content
   type UserContentPart =
     | { type: "text"; text: string }
@@ -144,20 +225,29 @@ export async function analyzeIssueWithAI(params: AnalyzeIssueParams): Promise<An
     hasImage: Boolean(params.imageBase64 || params.imageUrl),
   });
 
-  // Try gemini-2.0-flash with fallback to gemini-1.5-flash
-  const modelsToTry = ["gemini-2.0-flash", "gemini-1.5-flash"];
+  // Primary model: gemini-3.6-flash, with fallback to gemini-2.0-flash and gemini-1.5-flash
+  const configuredModel = process.env.GEMINI_MODEL?.trim();
+  const modelsToTry = Array.from(
+    new Set([
+      ...(configuredModel ? [configuredModel] : []),
+      "gemini-3.6-flash",
+      "gemini-3.5-flash",
+      "gemini-2.5-flash",
+      "gemini-2.0-flash",
+      "gemini-1.5-flash",
+    ])
+  );
   let lastError: unknown = null;
 
   for (const modelName of modelsToTry) {
     try {
+      const model = getLanguageModel(modelName);
+
       const { object } = await generateObject({
-        model: google(modelName),
+        model,
         schema: aiIssueAnalysisSchema,
+        system: SYSTEM_PROMPT,
         messages: [
-          {
-            role: "system",
-            content: SYSTEM_PROMPT,
-          },
           {
             role: "user",
             content: contentParts,

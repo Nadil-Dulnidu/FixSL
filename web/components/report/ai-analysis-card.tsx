@@ -165,7 +165,7 @@ export function AIAnalysisCard({
           </div>
           <div>
             <h4 className="text-sm font-bold text-white flex items-center gap-2">
-              Gemini AI Smart Assistant
+              Gemini 3.6 AI Smart Assistant
               <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">
                 Advisory
               </span>
@@ -212,7 +212,7 @@ export function AIAnalysisCard({
             <Sparkles className="w-4 h-4 text-amber-400 absolute inset-0 m-auto animate-pulse" />
           </div>
           <div className="space-y-1">
-            <p className="text-sm font-semibold text-white">Analyzing issue with Gemini AI...</p>
+            <p className="text-sm font-semibold text-white">Analyzing issue with Gemini 3.6 AI...</p>
             <p className="text-xs text-slate-400">
               Evaluating hazard context, public safety risk, and priority
               {selectedFile ? " including your attached photo" : ""}

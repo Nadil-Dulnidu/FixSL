@@ -21,17 +21,28 @@ const requestSchema = z.object({
 
 export async function POST(req: NextRequest) {
   try {
-    const apiKey =
-      (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim()) ||
-      (process.env.GOOGLE_GENERATIVE_AI_API_KEY &&
-        process.env.GOOGLE_GENERATIVE_AI_API_KEY.trim());
+    const hasServiceAccount =
+      Boolean(process.env.GOOGLE_APPLICATION_CREDENTIALS) ||
+      Boolean(process.env.GCP_SERVICE_ACCOUNT_KEY) ||
+      Boolean(process.env.GOOGLE_CREDENTIALS) ||
+      (Boolean(process.env.GOOGLE_CLIENT_EMAIL) &&
+        Boolean(process.env.GOOGLE_PRIVATE_KEY)) ||
+      Boolean(process.env.GOOGLE_VERTEX_PROJECT) ||
+      Boolean(process.env.GCP_PROJECT_ID);
 
-    if (!apiKey) {
+    const hasApiKey =
+      Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim()) ||
+      Boolean(
+        process.env.GOOGLE_GENERATIVE_AI_API_KEY &&
+          process.env.GOOGLE_GENERATIVE_AI_API_KEY.trim()
+      );
+
+    if (!hasServiceAccount && !hasApiKey) {
       return NextResponse.json(
         {
           success: false,
           error:
-            "AI analysis requires a configured GEMINI_API_KEY in your web/.env file. You can continue submitting your report manually.",
+            "AI analysis requires GCP Service Account credentials (GOOGLE_APPLICATION_CREDENTIALS or GCP_SERVICE_ACCOUNT_KEY) or GEMINI_API_KEY in your web/.env file. You can continue submitting your report manually.",
         },
         { status: 503 }
       );
@@ -92,11 +103,27 @@ export async function POST(req: NextRequest) {
       error: error instanceof Error ? error.message : String(error),
     });
 
+    const detailedMessage =
+      error instanceof Error ? error.message : String(error);
+
+    let friendlyError =
+      "AI analysis is temporarily unavailable. You can continue submitting your report manually.";
+
+    if (
+      detailedMessage.includes("API_KEY_SERVICE_BLOCKED") ||
+      detailedMessage.includes("generativelanguage.googleapis.com") ||
+      detailedMessage.includes("blocked")
+    ) {
+      friendlyError =
+        "Your GEMINI_API_KEY is restricted or Generative Language API is not enabled on this key. Please allow 'Generative Language API' in GCP Credentials or create an API key from Google AI Studio (https://aistudio.google.com/app/apikey).";
+    } else if (process.env.NODE_ENV !== "production") {
+      friendlyError = `AI analysis error: ${detailedMessage}`;
+    }
+
     return NextResponse.json(
       {
         success: false,
-        error:
-          "AI analysis is temporarily unavailable. You can continue submitting your report manually.",
+        error: friendlyError,
       },
       { status: 500 }
     );
