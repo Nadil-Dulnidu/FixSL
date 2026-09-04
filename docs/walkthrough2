@@ -1,0 +1,123 @@
+# FixSL — Developer B Implementation Walkthrough
+
+**Role:** Developer B
+**Phase Completed:** Phase 4 (Admin Dashboard)
+**Status:** ✅ Successfully implemented & verified with production build passing.
+
+---
+
+## Phase 4 — Admin Dashboard
+
+### 1. Clerk Authentication Pages
+
+- [**`app/sign-in/[[...sign-in]]/page.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/app/sign-in/%5B%5B...sign-in%5D%5D/page.tsx): Custom styled Clerk `<SignIn />` with FixSL dark theme branding, ambient background glow, and amber accent styling on all form elements.
+- [**`app/sign-up/[[...sign-up]]/page.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/app/sign-up/%5B%5B...sign-up%5D%5D/page.tsx): Matching `<SignUp />` component with identical dark theme.
+
+---
+
+### 2. Admin Layout & Error Handling
+
+- [**`app/admin/layout.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/app/admin/layout.tsx): Server component with 3-layer auth:
+  1. Redirects unauthenticated users to `/sign-in`
+  2. Shows styled 403 "Access Denied" page for non-admin users
+  3. Renders sidebar + content area for admin users
+  - Checks `sessionClaims.metadata.role === "admin"` via Clerk's `auth()`
+- [**`app/admin/error.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/app/admin/error.tsx): Admin-specific error boundary with error digest display, claymorphic card, and "Try Again" button.
+- [**`components/admin/admin-sidebar.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/components/admin/admin-sidebar.tsx): Client component sidebar with:
+  - FixSL admin branding (shield icon + "Admin Panel" label)
+  - Navigation: Dashboard (`/admin`), Issues (`/admin/issues`) with active state highlighting
+  - Clerk `<UserButton />` in footer
+  - Responsive: fixed overlay on mobile with toggle button, static on desktop
+
+---
+
+### 3. Admin Dashboard
+
+- [**`app/admin/page.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/app/admin/page.tsx): Server component fetching live stats + recent issues via `getAdminStats()` and `getAdminIssues()`. Falls back to demo data when Supabase is not configured.
+- [**`app/admin/loading.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/app/admin/loading.tsx): Skeleton loading state matching the stats grid + recent issues list layout.
+- [**`components/admin/stats-cards.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/components/admin/stats-cards.tsx): 7 stat cards in a responsive grid — Total, Reported, Verified, In Progress, Resolved, Critical, High Priority. Each with icon, colored left border, and description.
+
+---
+
+### 4. Admin Issues Table
+
+- [**`app/admin/issues/page.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/app/admin/issues/page.tsx): Server component reading URL search params for filter state, calls `getAdminIssues(filters)`.
+- [**`app/admin/issues/loading.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/app/admin/issues/loading.tsx): Table + filters skeleton.
+- [**`components/admin/issues-table.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/components/admin/issues-table.tsx): Data table with columns: Tracking ID, Title, Category, Status, Priority, Location, Date. Row hover reveals detail link. Responsive column hiding on smaller screens. Row count footer.
+- [**`components/admin/issue-filters.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/components/admin/issue-filters.tsx): Filter bar with 3 native `<select>` dropdowns (status, category, priority) that update URL search params. "Clear" button when any filter is active.
+
+---
+
+### 5. Admin Issue Detail
+
+- [**`app/admin/issues/[id]/page.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/app/admin/issues/%5Bid%5D/page.tsx): Full issue detail with 2-column layout:
+  - **Left (2/3):** Description card, attached photo (Next.js `<Image />`), location card with coordinates + mini map tile preview
+  - **Right (1/3):** Admin controls card (status/priority dropdowns), metadata card (dates, category, UUID), link to public issue page
+  - Back navigation to issues list
+- [**`components/admin/status-update.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/components/admin/status-update.tsx): Custom dropdown showing all 4 statuses with color dots and descriptions. Uses `useTransition` for loading state, calls `updateIssueStatus` server action, shows toast feedback.
+- [**`components/admin/priority-update.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/components/admin/priority-update.tsx): Custom dropdown for 4 priority levels with color dots. Same pattern: `useTransition` + server action + toast.
+
+---
+
+### 6. Server Actions
+
+- [**`lib/actions/admin.ts`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/lib/actions/admin.ts): All admin server actions:
+  - `requireAdmin()` — Clerk auth helper that checks `sessionClaims.metadata.role === "admin"`, throws `ForbiddenError` otherwise
+  - `getAdminStats()` — Aggregates status/priority counts from all issues
+  - `getAdminIssues(filters?)` — Fetches issues with optional status/category/priority filtering
+  - `getAdminIssueById(id)` — Single issue by UUID
+  - `updateIssueStatus(issueId, status)` — Clerk auth + Zod validation + DB update + logger
+  - `updateIssuePriority(issueId, priority)` — Clerk auth + Zod validation + DB update + logger
+  - All actions wrapped in `safeAction()` with structured logging
+
+---
+
+### 7. Shared Badge Components
+
+- [**`components/issues/issue-status-badge.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/components/issues/issue-status-badge.tsx): Status badge using `ISSUE_STATUSES` config
+- [**`components/issues/priority-badge.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/components/issues/priority-badge.tsx): Priority badge using `ISSUE_PRIORITIES` config
+- [**`components/issues/category-badge.tsx`**](file:///c:/Users/LOQ/OneDrive/Desktop/FixSL/web/components/issues/category-badge.tsx): Category badge with Lucide icon using `ISSUE_CATEGORIES` config
+
+---
+
+## Verification
+
+Build tested with `next build`:
+- **Build Status:** ✅ Successful (Exit code: 0)
+- **TypeScript Check:** ✅ Passed without errors
+- **Routes Generated:**
+  - `ƒ /admin` (Admin Dashboard)
+  - `ƒ /admin/issues` (Issue Management Table)
+  - `ƒ /admin/issues/[id]` (Admin Issue Detail)
+  - `ƒ /sign-in/[[...sign-in]]` (Clerk Sign-In)
+  - `ƒ /sign-up/[[...sign-up]]` (Clerk Sign-Up)
+
+> [!NOTE]
+> Supabase fetch errors during build are expected — no live database is configured at build time. The dashboard falls back to demo stats, and the issues table renders empty. At runtime with valid credentials, all data will load from Supabase.
+
+---
+
+## Files Created (20 total)
+
+| # | File | Purpose |
+|---|---|---|
+| 1 | `app/sign-in/[[...sign-in]]/page.tsx` | Clerk sign-in page |
+| 2 | `app/sign-up/[[...sign-up]]/page.tsx` | Clerk sign-up page |
+| 3 | `app/admin/layout.tsx` | Admin layout with role check |
+| 4 | `app/admin/error.tsx` | Admin error boundary |
+| 5 | `app/admin/page.tsx` | Admin dashboard |
+| 6 | `app/admin/loading.tsx` | Dashboard loading skeleton |
+| 7 | `app/admin/issues/page.tsx` | Issues management table |
+| 8 | `app/admin/issues/loading.tsx` | Table loading skeleton |
+| 9 | `app/admin/issues/[id]/page.tsx` | Admin issue detail |
+| 10 | `components/admin/admin-sidebar.tsx` | Sidebar navigation |
+| 11 | `components/admin/stats-cards.tsx` | Dashboard stats cards |
+| 12 | `components/admin/issues-table.tsx` | Issues data table |
+| 13 | `components/admin/issue-filters.tsx` | Filter dropdowns |
+| 14 | `components/admin/status-update.tsx` | Status change dropdown |
+| 15 | `components/admin/priority-update.tsx` | Priority change dropdown |
+| 16 | `components/issues/issue-status-badge.tsx` | Status badge |
+| 17 | `components/issues/priority-badge.tsx` | Priority badge |
+| 18 | `components/issues/category-badge.tsx` | Category badge with icon |
+| 19 | `lib/actions/admin.ts` | All admin server actions |
+| 20 | *(bug fixes)* | `admin-sidebar.tsx` Clerk prop, `admin.ts` Supabase types |
