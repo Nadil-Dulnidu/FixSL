@@ -22,7 +22,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { LocationPicker } from "@/components/report/location-picker";
 import { ImageUpload } from "@/components/report/image-upload";
 import { ReportSuccess } from "@/components/report/report-success";
-import { ISSUE_CATEGORIES, DEFAULT_MAP_CENTER } from "@/lib/constants";
+import { AIAnalysisCard } from "@/components/report/ai-analysis-card";
+import { ISSUE_CATEGORIES, ISSUE_PRIORITIES, DEFAULT_MAP_CENTER } from "@/lib/constants";
 import { createIssue, CreateIssueResult } from "@/lib/actions/issues";
 import { toast } from "sonner";
 
@@ -41,12 +42,29 @@ export function ReportForm() {
 
   // Form State
   const [category, setCategory] = useState<string>("pothole");
+  const [priority, setPriority] = useState<string>("medium");
+  const [aiApplied, setAiApplied] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [latitude, setLatitude] = useState<number>(DEFAULT_MAP_CENTER[0]);
   const [longitude, setLongitude] = useState<number>(DEFAULT_MAP_CENTER[1]);
   const [locationName, setLocationName] = useState<string>("Colombo, Western Province");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const handleApplyAI = (suggestion: { category: string; priority: string }) => {
+    if (suggestion.category && ISSUE_CATEGORIES[suggestion.category]) {
+      setCategory(suggestion.category);
+    }
+    if (suggestion.priority && ISSUE_PRIORITIES[suggestion.priority]) {
+      setPriority(suggestion.priority);
+    }
+    setAiApplied(true);
+    setErrors((prev) => {
+      const next = { ...prev };
+      delete next.category;
+      return next;
+    });
+  };
 
   // Validation errors
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -96,6 +114,7 @@ export function ReportForm() {
     startTransition(async () => {
       const formData = new FormData();
       formData.append("category", category);
+      formData.append("priority", priority);
       formData.append("title", title.trim());
       formData.append("description", description.trim());
       formData.append("latitude", latitude.toString());
@@ -119,6 +138,9 @@ export function ReportForm() {
 
   const handleReset = () => {
     setSuccessResult(null);
+    setCategory("pothole");
+    setPriority("medium");
+    setAiApplied(false);
     setTitle("");
     setDescription("");
     setSelectedFile(null);
@@ -182,6 +204,40 @@ export function ReportForm() {
         {errors.category && (
           <p className="text-xs text-red-400 mt-1 font-medium">{errors.category}</p>
         )}
+
+        {/* Priority Selector */}
+        <div className="pt-4 border-t border-white/5 space-y-2.5">
+          <div className="flex items-center justify-between">
+            <label className="text-xs font-semibold text-slate-300">
+              Severity / Action Priority
+            </label>
+            <span className="text-[11px] text-slate-500">
+              Auto-selected when using AI analysis below
+            </span>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {Object.entries(ISSUE_PRIORITIES).map(([key, config]) => {
+              const isSelected = priority === key;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => {
+                    setPriority(key);
+                    setAiApplied(false);
+                  }}
+                  className={`py-2 px-3 rounded-xl text-xs font-bold transition-all border text-center cursor-pointer ${
+                    isSelected
+                      ? `${config.badgeClass} ring-2 ring-amber-400/40 shadow-sm font-black`
+                      : "bg-slate-900/60 border-white/5 text-slate-400 hover:text-slate-200 hover:border-white/15"
+                  }`}
+                >
+                  {config.label} Priority
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       {/* 2. Issue Details (Title & Description) */}
@@ -301,9 +357,21 @@ export function ReportForm() {
 
         <ImageUpload
           selectedFile={selectedFile}
-          onImageChange={(file) => setSelectedFile(file)}
+          onImageChange={(file) => {
+            setSelectedFile(file);
+            setAiApplied(false);
+          }}
         />
       </div>
+
+      {/* 5. AI Smart Analysis Card */}
+      <AIAnalysisCard
+        title={title}
+        description={description}
+        selectedFile={selectedFile}
+        onApply={handleApplyAI}
+        applied={aiApplied}
+      />
 
       {/* Submit Button */}
       <div className="pt-2">
