@@ -127,37 +127,46 @@ export function VerificationPanel({
       </div>
 
       {/* Voting Buttons */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div className="flex flex-col gap-2.5 sm:gap-3">
         {/* Still Exists / Confirm */}
         <button
           type="button"
           onClick={() => handleVote("confirm")}
           disabled={isPending || Boolean(userVotedType)}
           className={cn(
-            "relative min-h-[48px] py-3.5 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer touch-manipulation active:scale-[0.98]",
+            "w-full min-h-[54px] py-3 px-3.5 sm:px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer touch-manipulation active:scale-[0.98]",
             userVotedType === "confirm"
               ? "clay-card bg-amber-500/20 border-amber-400 text-amber-300 shadow-md shadow-amber-500/15 ring-2 ring-amber-400/40"
               : "clay-btn-secondary hover:border-amber-500/40 text-slate-200 hover:text-white"
           )}
         >
-          <div className="flex items-center gap-2.5 text-left min-w-0">
-            {userVotedType === "confirm" ? (
-              <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-            ) : isPending ? (
-              <Loader2 className="w-4 h-4 text-amber-400 animate-spin shrink-0" />
-            ) : (
-              <ThumbsUp className="w-4 h-4 text-amber-400 shrink-0" />
-            )}
-            <div className="truncate">
-              <span className="block text-xs sm:text-sm font-bold truncate">
+          <div className="flex items-center gap-3 text-left min-w-0">
+            <div
+              className={cn(
+                "w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border",
+                userVotedType === "confirm"
+                  ? "bg-amber-400/20 border-amber-400/40 text-amber-400"
+                  : "bg-slate-900 border-white/5 text-amber-400 clay-icon-well"
+              )}
+            >
+              {userVotedType === "confirm" ? (
+                <CheckCircle2 className="w-4.5 h-4.5 text-amber-400" />
+              ) : isPending ? (
+                <Loader2 className="w-4.5 h-4.5 text-amber-400 animate-spin" />
+              ) : (
+                <ThumbsUp className="w-4.5 h-4.5 text-amber-400" />
+              )}
+            </div>
+            <div className="min-w-0">
+              <span className="block text-xs sm:text-sm font-bold text-white leading-tight">
                 {userVotedType === "confirm" ? "You Verified This" : "Still Exists"}
               </span>
-              <span className="text-[10px] text-slate-400 font-normal">
-                Confirm open hazard
+              <span className="text-[11px] text-slate-400 font-normal leading-snug">
+                Confirm hazard is open & active
               </span>
             </div>
           </div>
-          <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-xs font-mono font-bold text-amber-400 shrink-0 clay-pill">
+          <span className="px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-xs font-mono font-bold text-amber-400 shrink-0 clay-pill">
             {confirmCount}
           </span>
         </button>
@@ -168,28 +177,37 @@ export function VerificationPanel({
           onClick={() => handleVote("dispute")}
           disabled={isPending || Boolean(userVotedType)}
           className={cn(
-            "relative min-h-[48px] py-3.5 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer touch-manipulation active:scale-[0.98]",
+            "w-full min-h-[54px] py-3 px-3.5 sm:px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer touch-manipulation active:scale-[0.98]",
             userVotedType === "dispute"
               ? "clay-card bg-rose-500/20 border-rose-400 text-rose-300 shadow-md shadow-rose-500/15 ring-2 ring-rose-400/40"
               : "clay-btn-secondary hover:border-slate-500 text-slate-300 hover:text-white"
           )}
         >
-          <div className="flex items-center gap-2.5 text-left min-w-0">
-            {userVotedType === "dispute" ? (
-              <CheckCircle2 className="w-4 h-4 text-rose-400 shrink-0" />
-            ) : (
-              <AlertCircle className="w-4 h-4 text-slate-400 shrink-0" />
-            )}
-            <div className="truncate">
-              <span className="block text-xs sm:text-sm font-bold truncate">
-                {userVotedType === "dispute" ? "You Flagged This" : "Report Duplicate"}
+          <div className="flex items-center gap-3 text-left min-w-0">
+            <div
+              className={cn(
+                "w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border",
+                userVotedType === "dispute"
+                  ? "bg-rose-400/20 border-rose-400/40 text-rose-400"
+                  : "bg-slate-900 border-white/5 text-slate-400 clay-icon-well"
+              )}
+            >
+              {userVotedType === "dispute" ? (
+                <CheckCircle2 className="w-4.5 h-4.5 text-rose-400" />
+              ) : (
+                <AlertCircle className="w-4.5 h-4.5 text-slate-400" />
+              )}
+            </div>
+            <div className="min-w-0">
+              <span className="block text-xs sm:text-sm font-bold text-slate-200 leading-tight">
+                {userVotedType === "dispute" ? "You Flagged This" : "Report Duplicate / Dispute"}
               </span>
-              <span className="text-[10px] text-slate-400 font-normal">
-                Dispute or duplicate
+              <span className="text-[11px] text-slate-400 font-normal leading-snug">
+                Flag duplicate or incorrect report
               </span>
             </div>
           </div>
-          <span className="px-2.5 py-0.5 rounded-full bg-slate-800 border border-white/5 text-xs font-mono font-bold text-slate-300 shrink-0 clay-pill">
+          <span className="px-3 py-1 rounded-full bg-slate-800 border border-white/5 text-xs font-mono font-bold text-slate-300 shrink-0 clay-pill">
             {disputeCount}
           </span>
         </button>

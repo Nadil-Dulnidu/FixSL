@@ -133,37 +133,46 @@ export function ResolutionFeedback({
         </div>
 
         {/* Action Buttons */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="flex flex-col gap-2.5 sm:gap-3">
           {/* Yes, it's fixed */}
           <button
             type="button"
             onClick={() => handleVote("resolution_confirm")}
             disabled={isPending || Boolean(userVotedType)}
             className={cn(
-              "relative min-h-[48px] py-3.5 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer touch-manipulation active:scale-[0.98]",
+              "w-full min-h-[54px] py-3 px-3.5 sm:px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer touch-manipulation active:scale-[0.98]",
               userVotedType === "resolution_confirm"
                 ? "clay-card bg-emerald-500/20 border-emerald-400 text-emerald-300 shadow-md shadow-emerald-500/15 ring-2 ring-emerald-400/40"
                 : "clay-btn-secondary hover:border-emerald-500/40 text-slate-200 hover:text-white"
             )}
           >
-            <div className="flex items-center gap-2.5 text-left min-w-0">
-              {userVotedType === "resolution_confirm" ? (
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-              ) : isPending ? (
-                <Loader2 className="w-4 h-4 text-emerald-400 animate-spin shrink-0" />
-              ) : (
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-              )}
-              <div className="truncate">
-                <span className="block text-xs sm:text-sm font-bold truncate">
+            <div className="flex items-center gap-3 text-left min-w-0">
+              <div
+                className={cn(
+                  "w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border",
+                  userVotedType === "resolution_confirm"
+                    ? "bg-emerald-400/20 border-emerald-400/40 text-emerald-400"
+                    : "bg-slate-900 border-white/5 text-emerald-400 clay-icon-well"
+                )}
+              >
+                {userVotedType === "resolution_confirm" ? (
+                  <CheckCircle2 className="w-4.5 h-4.5 text-emerald-400" />
+                ) : isPending ? (
+                  <Loader2 className="w-4.5 h-4.5 text-emerald-400 animate-spin" />
+                ) : (
+                  <CheckCircle2 className="w-4.5 h-4.5 text-emerald-400" />
+                )}
+              </div>
+              <div className="min-w-0">
+                <span className="block text-xs sm:text-sm font-bold text-white leading-tight">
                   {userVotedType === "resolution_confirm" ? "You Confirmed Fixed" : "Yes, It's Fixed"}
                 </span>
-                <span className="text-[10px] text-slate-400 font-normal">
-                  Repair verified complete
+                <span className="text-[11px] text-slate-400 font-normal leading-snug">
+                  Repair verified complete in person
                 </span>
               </div>
             </div>
-            <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-xs font-mono font-bold text-emerald-400 shrink-0 clay-pill">
+            <span className="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-xs font-mono font-bold text-emerald-400 shrink-0 clay-pill">
               {confirmCount}
             </span>
           </button>
@@ -174,30 +183,39 @@ export function ResolutionFeedback({
             onClick={() => handleVote("resolution_dispute")}
             disabled={isPending || Boolean(userVotedType)}
             className={cn(
-              "relative min-h-[48px] py-3.5 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer touch-manipulation active:scale-[0.98]",
+              "w-full min-h-[54px] py-3 px-3.5 sm:px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer touch-manipulation active:scale-[0.98]",
               userVotedType === "resolution_dispute"
                 ? "clay-card bg-rose-500/20 border-rose-400 text-rose-300 shadow-md shadow-rose-500/15 ring-2 ring-rose-400/40"
                 : "clay-btn-secondary hover:border-red-500/40 text-slate-300 hover:text-white"
             )}
           >
-            <div className="flex items-center gap-2.5 text-left min-w-0">
-              {userVotedType === "resolution_dispute" ? (
-                <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
-              ) : (
-                <AlertTriangle className="w-4 h-4 text-slate-400 shrink-0" />
-              )}
-              <div className="truncate">
-                <span className="block text-xs sm:text-sm font-bold truncate">
+            <div className="flex items-center gap-3 text-left min-w-0">
+              <div
+                className={cn(
+                  "w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border",
+                  userVotedType === "resolution_dispute"
+                    ? "bg-rose-400/20 border-rose-400/40 text-rose-400"
+                    : "bg-slate-900 border-white/5 text-rose-400 clay-icon-well"
+                )}
+              >
+                {userVotedType === "resolution_dispute" ? (
+                  <AlertTriangle className="w-4.5 h-4.5 text-rose-400" />
+                ) : (
+                  <AlertTriangle className="w-4.5 h-4.5 text-slate-400" />
+                )}
+              </div>
+              <div className="min-w-0">
+                <span className="block text-xs sm:text-sm font-bold text-slate-200 leading-tight">
                   {userVotedType === "resolution_dispute" ? "You Disputed" : "No, Problem Remains"}
                 </span>
-                <span className="text-[10px] text-slate-400 font-normal">
-                  Dispute resolution
+                <span className="text-[11px] text-slate-400 font-normal leading-snug">
+                  Dispute resolution or incomplete work
                 </span>
               </div>
             </div>
             <span
               className={cn(
-                "px-2.5 py-0.5 rounded-full text-xs font-mono font-bold shrink-0 clay-pill",
+                "px-3 py-1 rounded-full text-xs font-mono font-bold shrink-0 clay-pill",
                 disputeCount >= 5
                   ? "bg-red-500/20 border border-red-500/40 text-red-400 animate-pulse"
                   : "bg-slate-800 border border-white/5 text-slate-300"
