@@ -1,23 +1,17 @@
 import React from "react";
 import Link from "next/link";
-import { PlusCircle, MapPin, ShieldCheck, ArrowRight, Activity } from "lucide-react";
+import { PlusCircle, MapPin, ShieldCheck, ArrowRight, Activity, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden pt-12 pb-20 md:pt-20 md:pb-28">
       {/* Background Decorative Glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-10 left-10 w-72 h-72 bg-blue-500/5 rounded-full blur-2xl pointer-events-none -z-10" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[350px] bg-amber-500/12 rounded-full blur-[100px] pointer-events-none -z-10" />
+      <div className="absolute bottom-10 left-10 w-80 h-80 bg-blue-500/8 rounded-full blur-[90px] pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Civic Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 backdrop-blur-md mb-8">
-          <span className="flex h-2 w-2 rounded-full bg-amber-400 animate-ping" />
-          <span className="text-xs font-bold text-amber-400 uppercase tracking-wider">
-            🇱🇰 Citizen-Powered Civic Action Platform
-          </span>
-        </div>
+
 
         {/* Main Headline */}
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.1] max-w-4xl mx-auto">
@@ -29,7 +23,7 @@ export function HeroSection() {
         </h1>
 
         {/* Subtitle */}
-        <p className="mt-6 text-base sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
+        <p className="mt-6 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
           From dangerous potholes and broken streetlights to flooded drains and overflowing waste. Drop a pin, snap a photo, and join thousands of citizens holding municipal authorities accountable.
         </p>
 
@@ -49,8 +43,8 @@ export function HeroSection() {
           <Link href="/map" className="w-full sm:w-auto">
             <Button
               size="lg"
-              variant="outline"
-              className="w-full sm:w-auto gap-2.5 text-base font-semibold border-slate-700 hover:bg-slate-800/80 h-14 px-8"
+              variant="secondary"
+              className="w-full sm:w-auto gap-2.5 text-base font-semibold h-14 px-8"
             >
               <MapPin className="w-5 h-5 text-amber-400" />
               Explore Live Map
@@ -59,34 +53,34 @@ export function HeroSection() {
         </div>
 
         {/* Trust Badges */}
-        <div className="mt-14 pt-8 border-t border-slate-800/60 max-w-3xl mx-auto grid grid-cols-2 sm:grid-cols-3 gap-6 text-left">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shrink-0">
+        <div className="mt-16 max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+          <div className="clay-card p-4.5 flex items-center gap-3.5 border-white/5">
+            <div className="w-11 h-11 rounded-2xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center text-amber-400 shrink-0 clay-icon-well">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-xs font-bold text-white uppercase">100% Anonymous</p>
-              <p className="text-xs text-slate-400">No account required to report</p>
+              <p className="text-xs font-bold text-white uppercase tracking-wider">100% Anonymous</p>
+              <p className="text-xs text-slate-400 mt-0.5">No account required to report</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
+          <div className="clay-card p-4.5 flex items-center gap-3.5 border-white/5">
+            <div className="w-11 h-11 rounded-2xl bg-blue-500/15 border border-blue-500/25 flex items-center justify-center text-blue-400 shrink-0 clay-icon-well">
               <MapPin className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-xs font-bold text-white uppercase">Precise GPS</p>
-              <p className="text-xs text-slate-400">Exact coordinates & landmarks</p>
+              <p className="text-xs font-bold text-white uppercase tracking-wider">Precise GPS</p>
+              <p className="text-xs text-slate-400 mt-0.5">Exact coordinates & landmarks</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 col-span-2 sm:col-span-1 justify-center sm:justify-start">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+          <div className="clay-card p-4.5 flex items-center gap-3.5 border-white/5">
+            <div className="w-11 h-11 rounded-2xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center text-emerald-400 shrink-0 clay-icon-well">
               <Activity className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-xs font-bold text-white uppercase">Public Tracking</p>
-              <p className="text-xs text-slate-400">Real-time status updates</p>
+              <p className="text-xs font-bold text-white uppercase tracking-wider">Public Tracking</p>
+              <p className="text-xs text-slate-400 mt-0.5">Real-time status updates</p>
             </div>
           </div>
         </div>
@@ -94,3 +88,4 @@ export function HeroSection() {
     </section>
   );
 }
+

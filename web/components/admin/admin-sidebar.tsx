@@ -39,24 +39,24 @@ export function AdminSidebar() {
   const sidebarContent = (
     <div className="flex flex-col h-full">
       {/* Header / Brand */}
-      <div className="p-6 border-b border-slate-800/60">
-        <Link href="/admin" className="flex items-center gap-3">
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20">
-            <Shield className="h-5 w-5 text-slate-950" />
+      <div className="p-6 border-b border-white/5">
+        <Link href="/admin" className="flex items-center gap-3 group">
+          <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20 border border-amber-300/40 group-hover:scale-105 transition-transform">
+            <Shield className="h-5 w-5 text-slate-950 stroke-[2.5]" />
           </div>
           <div>
-            <span className="text-lg font-bold text-white">
+            <span className="text-lg font-black text-white tracking-tight">
               Fix<span className="text-amber-400">SL</span>
             </span>
-            <p className="text-[10px] text-slate-500 uppercase tracking-widest font-medium">
-              Admin Panel
+            <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">
+              Admin Portal
             </p>
           </div>
         </Link>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-1">
+      <nav className="flex-1 p-4 space-y-1.5">
         {navItems.map((item) => {
           const active = isActive(item.href);
           return (
@@ -65,16 +65,16 @@ export function AdminSidebar() {
               href={item.href}
               onClick={() => setMobileOpen(false)}
               className={cn(
-                "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200",
+                "flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-all duration-200",
                 active
-                  ? "bg-amber-500/15 text-amber-400 border border-amber-500/25 shadow-sm shadow-amber-500/10"
-                  : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/60"
+                  ? "clay-btn-secondary text-amber-400 border-amber-500/30 shadow-md"
+                  : "text-slate-400 hover:text-white hover:bg-slate-900/60"
               )}
             >
               <item.icon
                 className={cn(
                   "h-4.5 w-4.5",
-                  active ? "text-amber-400" : "text-slate-500"
+                  active ? "text-amber-400" : "text-slate-400"
                 )}
               />
               {item.label}
@@ -84,17 +84,18 @@ export function AdminSidebar() {
       </nav>
 
       {/* Footer — User */}
-      <div className="p-4 border-t border-slate-800/60">
-        <div className="flex items-center gap-3 px-3 py-2">
+      <div className="p-4 border-t border-white/5">
+        <div className="flex items-center gap-3 px-3 py-2.5 rounded-2xl clay-inset">
           <UserButton
             appearance={{
               elements: {
-                avatarBox: "h-8 w-8",
+                avatarBox: "h-8 w-8 rounded-xl",
               },
             }}
           />
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-slate-400 truncate">Admin Account</p>
+            <p className="text-xs font-semibold text-slate-300 truncate">Municipal Admin</p>
+            <p className="text-[10px] text-slate-400 font-mono">Authorized Session</p>
           </div>
         </div>
       </div>
@@ -105,23 +106,23 @@ export function AdminSidebar() {
     <>
       {/* Mobile toggle button */}
       <Button
-        variant="ghost"
+        variant="secondary"
         size="icon"
-        className="fixed top-4 left-4 z-50 lg:hidden bg-slate-900/90 border border-slate-800"
+        className="fixed top-4 left-4 z-50 lg:hidden bg-slate-900/90 border-white/10 rounded-2xl"
         onClick={() => setMobileOpen(!mobileOpen)}
         aria-label="Toggle admin sidebar"
       >
         {mobileOpen ? (
-          <X className="h-5 w-5 text-slate-300" />
+          <X className="h-5 w-5 text-slate-200" />
         ) : (
-          <Menu className="h-5 w-5 text-slate-300" />
+          <Menu className="h-5 w-5 text-slate-200" />
         )}
       </Button>
 
       {/* Mobile overlay */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 bg-black/60 z-40 lg:hidden backdrop-blur-sm"
+          className="fixed inset-0 bg-black/70 z-40 lg:hidden backdrop-blur-sm"
           onClick={() => setMobileOpen(false)}
         />
       )}
@@ -129,7 +130,7 @@ export function AdminSidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed top-0 left-0 h-full w-64 bg-slate-950/95 border-r border-slate-800/60 z-40 transition-transform duration-300 backdrop-blur-xl",
+          "fixed top-0 left-0 h-full w-64 bg-[#090d16]/95 border-r border-white/10 z-40 transition-transform duration-300 backdrop-blur-2xl",
           "lg:translate-x-0 lg:static lg:z-auto",
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         )}
@@ -139,3 +140,4 @@ export function AdminSidebar() {
     </>
   );
 }
+

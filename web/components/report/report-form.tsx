@@ -132,15 +132,17 @@ export function ReportForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       {/* 1. Category Selection */}
-      <div className="clay-card p-6 sm:p-8 space-y-4">
-        <div className="flex items-center gap-2.5 pb-2 border-b border-slate-800">
-          <Layers className="w-5 h-5 text-amber-400" />
+      <div className="clay-card p-6 sm:p-8 space-y-5 border-white/5">
+        <div className="flex items-center gap-2.5 pb-3 border-b border-white/5">
+          <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center text-amber-400 clay-icon-well">
+            <Layers className="w-4 h-4" />
+          </div>
           <h3 className="text-lg font-bold text-white tracking-tight">
             1. Select Hazard Category <span className="text-amber-400">*</span>
           </h3>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 pt-1">
           {Object.entries(ISSUE_CATEGORIES).map(([key, config]) => {
             const Icon = CATEGORY_ICONS[key] || AlertOctagon;
             const isSelected = category === key;
@@ -150,17 +152,17 @@ export function ReportForm() {
                 key={key}
                 type="button"
                 onClick={() => setCategory(key)}
-                className={`p-4 rounded-2xl border text-left transition-all flex flex-col justify-between gap-3 ${
+                className={`p-4 rounded-2xl text-left transition-all duration-200 flex flex-col justify-between gap-3 cursor-pointer ${
                   isSelected
-                    ? "border-amber-400 bg-amber-500/15 text-white shadow-lg shadow-amber-500/10 ring-1 ring-amber-400/50"
-                    : "border-slate-800 bg-slate-950/60 text-slate-300 hover:border-slate-700 hover:bg-slate-900/60"
+                    ? "clay-card bg-amber-500/15 border-amber-400/60 shadow-lg shadow-amber-500/15 ring-2 ring-amber-400/40 translate-y-[-2px]"
+                    : "clay-inset hover:border-white/15 hover:bg-slate-900/60"
                 }`}
               >
                 <div
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                  className={`w-10 h-10 rounded-2xl flex items-center justify-center transition-transform ${
                     isSelected
-                      ? "bg-amber-400 text-slate-950 shadow-md"
-                      : "bg-slate-900 text-slate-400 border border-slate-800"
+                      ? "clay-btn-primary text-slate-950 scale-105"
+                      : "bg-slate-900 text-slate-400 border border-white/5 clay-icon-well"
                   }`}
                 >
                   <Icon className="w-5 h-5 stroke-[2.2]" />
@@ -178,14 +180,16 @@ export function ReportForm() {
           })}
         </div>
         {errors.category && (
-          <p className="text-xs text-red-400 mt-1">{errors.category}</p>
+          <p className="text-xs text-red-400 mt-1 font-medium">{errors.category}</p>
         )}
       </div>
 
       {/* 2. Issue Details (Title & Description) */}
-      <div className="clay-card p-6 sm:p-8 space-y-6">
-        <div className="flex items-center gap-2.5 pb-2 border-b border-slate-800">
-          <FileText className="w-5 h-5 text-amber-400" />
+      <div className="clay-card p-6 sm:p-8 space-y-6 border-white/5">
+        <div className="flex items-center gap-2.5 pb-3 border-b border-white/5">
+          <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center text-amber-400 clay-icon-well">
+            <FileText className="w-4 h-4" />
+          </div>
           <h3 className="text-lg font-bold text-white tracking-tight">
             2. Issue Details <span className="text-amber-400">*</span>
           </h3>
@@ -194,11 +198,11 @@ export function ReportForm() {
         {/* Title Field */}
         <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <label className="text-sm font-semibold text-slate-200">
+            <label className="text-xs sm:text-sm font-semibold text-slate-200">
               Short Summary / Title <span className="text-amber-400">*</span>
             </label>
             <span
-              className={`text-xs ${
+              className={`text-xs font-mono font-medium ${
                 title.length > 100
                   ? "text-red-400 font-bold"
                   : title.length >= 5
@@ -214,21 +218,21 @@ export function ReportForm() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g. Deep crater pothole near Colombo Fort railway station"
-            className={errors.title ? "border-red-500/60 focus-visible:ring-red-500" : ""}
+            className={errors.title ? "border-red-500/60 focus:ring-red-500" : ""}
           />
           {errors.title && (
-            <p className="text-xs text-red-400">{errors.title}</p>
+            <p className="text-xs text-red-400 font-medium">{errors.title}</p>
           )}
         </div>
 
         {/* Description Field */}
         <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <label className="text-sm font-semibold text-slate-200">
+            <label className="text-xs sm:text-sm font-semibold text-slate-200">
               Detailed Description <span className="text-amber-400">*</span>
             </label>
             <span
-              className={`text-xs ${
+              className={`text-xs font-mono font-medium ${
                 description.length > 1000
                   ? "text-red-400 font-bold"
                   : description.length >= 20
@@ -244,18 +248,20 @@ export function ReportForm() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Provide context, size of the hazard, traffic hazards, nearest landmark, or danger to pedestrians..."
-            className={errors.description ? "border-red-500/60 focus-visible:ring-red-500" : ""}
+            className={errors.description ? "border-red-500/60 focus:ring-red-500" : ""}
           />
           {errors.description && (
-            <p className="text-xs text-red-400">{errors.description}</p>
+            <p className="text-xs text-red-400 font-medium">{errors.description}</p>
           )}
         </div>
       </div>
 
       {/* 3. Geographic Location Pin */}
-      <div className="clay-card p-6 sm:p-8 space-y-4">
-        <div className="flex items-center gap-2.5 pb-2 border-b border-slate-800">
-          <MapPin className="w-5 h-5 text-amber-400" />
+      <div className="clay-card p-6 sm:p-8 space-y-4 border-white/5">
+        <div className="flex items-center gap-2.5 pb-3 border-b border-white/5">
+          <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center text-amber-400 clay-icon-well">
+            <MapPin className="w-4 h-4" />
+          </div>
           <h3 className="text-lg font-bold text-white tracking-tight">
             3. Pinpoint Location on Map <span className="text-amber-400">*</span>
           </h3>
@@ -283,9 +289,11 @@ export function ReportForm() {
       </div>
 
       {/* 4. Photo Upload */}
-      <div className="clay-card p-6 sm:p-8 space-y-4">
-        <div className="flex items-center gap-2.5 pb-2 border-b border-slate-800">
-          <Camera className="w-5 h-5 text-amber-400" />
+      <div className="clay-card p-6 sm:p-8 space-y-4 border-white/5">
+        <div className="flex items-center gap-2.5 pb-3 border-b border-white/5">
+          <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center text-amber-400 clay-icon-well">
+            <Camera className="w-4 h-4" />
+          </div>
           <h3 className="text-lg font-bold text-white tracking-tight">
             4. Attach Photographic Proof (Optional)
           </h3>
@@ -304,7 +312,7 @@ export function ReportForm() {
           disabled={isPending}
           variant="default"
           size="lg"
-          className="w-full h-14 text-base font-bold gap-3 shadow-xl shadow-amber-500/25"
+          className="w-full h-14 text-base font-bold gap-3 shadow-xl shadow-amber-500/25 rounded-2xl"
         >
           {isPending ? (
             <>
@@ -313,7 +321,7 @@ export function ReportForm() {
             </>
           ) : (
             <>
-              <Send className="w-5 h-5" />
+              <Send className="w-5 h-5 stroke-[2.5]" />
               <span>Publish Public Report</span>
             </>
           )}
@@ -325,3 +333,4 @@ export function ReportForm() {
     </form>
   );
 }
+

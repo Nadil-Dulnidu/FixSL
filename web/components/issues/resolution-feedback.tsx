@@ -108,15 +108,17 @@ export function ResolutionFeedback({
       {/* If disputed by >= 5 citizens, show prominent dispute alert banner */}
       {isDisputed && <DisputeBadge disputeCount={disputeCount} variant="banner" />}
 
-      <div className="clay-card p-5 sm:p-6 space-y-5 border-emerald-500/20 relative overflow-hidden">
+      <div className="clay-card p-5 sm:p-6 space-y-5 border-white/5 relative overflow-hidden">
         {/* Background glow */}
-        <div className="absolute top-0 right-0 w-36 h-36 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-40 h-40 bg-emerald-500/8 rounded-full blur-3xl pointer-events-none" />
 
         {/* Header */}
         <div className="flex items-start justify-between gap-3">
           <div className="space-y-1">
             <div className="flex items-center gap-2 text-white font-bold text-base">
-              <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+              <div className="w-7 h-7 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center text-emerald-400 clay-icon-well">
+                <CheckCircle2 className="w-4 h-4" />
+              </div>
               <span>Resolution Confirmation</span>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed">
@@ -124,7 +126,7 @@ export function ResolutionFeedback({
             </p>
           </div>
 
-          <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] font-mono text-slate-400 shrink-0">
+          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 border border-white/5 text-[11px] font-mono text-slate-400 shrink-0 clay-pill">
             <Users className="w-3.5 h-3.5 text-emerald-400" />
             <span>{totalVotes} Verifications</span>
           </div>
@@ -133,15 +135,15 @@ export function ResolutionFeedback({
         {/* Action Buttons */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {/* Yes, it's fixed */}
-          <Button
+          <button
             type="button"
             onClick={() => handleVote("resolution_confirm")}
             disabled={isPending || Boolean(userVotedType)}
             className={cn(
-              "relative h-auto py-3 px-4 flex items-center justify-between gap-3 rounded-xl font-semibold transition-all text-sm",
+              "relative h-auto py-3.5 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer",
               userVotedType === "resolution_confirm"
-                ? "bg-emerald-500/20 border-2 border-emerald-400 text-emerald-300 shadow-md shadow-emerald-500/10"
-                : "bg-slate-900/90 border border-slate-700/80 hover:border-emerald-500/50 text-slate-200 hover:text-white hover:bg-slate-800/80"
+                ? "clay-card bg-emerald-500/20 border-emerald-400 text-emerald-300 shadow-md shadow-emerald-500/15 ring-2 ring-emerald-400/40"
+                : "clay-btn-secondary hover:border-emerald-500/40 text-slate-200 hover:text-white"
             )}
           >
             <div className="flex items-center gap-2.5 text-left min-w-0">
@@ -161,21 +163,21 @@ export function ResolutionFeedback({
                 </span>
               </div>
             </div>
-            <span className="px-2 py-0.5 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-xs font-mono font-bold text-emerald-400 shrink-0">
+            <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-xs font-mono font-bold text-emerald-400 shrink-0 clay-pill">
               {confirmCount}
             </span>
-          </Button>
+          </button>
 
           {/* No, problem remains */}
-          <Button
+          <button
             type="button"
             onClick={() => handleVote("resolution_dispute")}
             disabled={isPending || Boolean(userVotedType)}
             className={cn(
-              "relative h-auto py-3 px-4 flex items-center justify-between gap-3 rounded-xl font-semibold transition-all text-sm",
+              "relative h-auto py-3.5 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer",
               userVotedType === "resolution_dispute"
-                ? "bg-red-500/20 border-2 border-red-400 text-red-300 shadow-md shadow-red-500/10"
-                : "bg-slate-900/90 border border-slate-700/80 hover:border-red-500/50 text-slate-300 hover:text-white hover:bg-slate-800/80"
+                ? "clay-card bg-rose-500/20 border-rose-400 text-rose-300 shadow-md shadow-rose-500/15 ring-2 ring-rose-400/40"
+                : "clay-btn-secondary hover:border-red-500/40 text-slate-300 hover:text-white"
             )}
           >
             <div className="flex items-center gap-2.5 text-left min-w-0">
@@ -195,20 +197,20 @@ export function ResolutionFeedback({
             </div>
             <span
               className={cn(
-                "px-2 py-0.5 rounded-md text-xs font-mono font-bold shrink-0",
+                "px-2.5 py-0.5 rounded-full text-xs font-mono font-bold shrink-0 clay-pill",
                 disputeCount >= 5
                   ? "bg-red-500/20 border border-red-500/40 text-red-400 animate-pulse"
-                  : "bg-slate-800 border border-slate-700 text-slate-300"
+                  : "bg-slate-800 border border-white/5 text-slate-300"
               )}
             >
               {disputeCount}
             </span>
-          </Button>
+          </button>
         </div>
 
         {/* Resolution Quality Breakdown */}
         {totalVotes > 0 && (
-          <div className="pt-2 border-t border-slate-800/60 space-y-2">
+          <div className="pt-3 border-t border-white/5 space-y-2">
             <div className="flex items-center justify-between text-xs">
               <span className="text-slate-400 flex items-center gap-1.5 font-medium">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
@@ -218,9 +220,9 @@ export function ResolutionFeedback({
                 {resolutionPercentage}% Confirmed Fixed ({confirmCount} of {totalVotes})
               </span>
             </div>
-            <div className="h-2 w-full bg-slate-950 rounded-full overflow-hidden border border-slate-800 flex">
+            <div className="h-2.5 w-full bg-slate-950 rounded-full overflow-hidden border border-white/5 flex shadow-inner">
               <div
-                className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 transition-all duration-500 rounded-full"
+                className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 transition-all duration-500 rounded-full shadow-md"
                 style={{ width: `${resolutionPercentage}%` }}
               />
             </div>
@@ -228,7 +230,7 @@ export function ResolutionFeedback({
         )}
 
         {userVotedType && (
-          <div className="text-[11px] text-center text-slate-400 bg-slate-950/60 py-1.5 px-3 rounded-lg border border-slate-800/80">
+          <div className="text-[11px] text-center text-slate-400 clay-inset py-2 px-3 rounded-xl">
             ✓ Your anonymous resolution feedback has been recorded.
           </div>
         )}
@@ -236,3 +238,4 @@ export function ResolutionFeedback({
     </div>
   );
 }
+

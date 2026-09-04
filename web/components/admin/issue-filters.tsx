@@ -33,22 +33,30 @@ export function IssueFilters() {
   }
 
   return (
-    <div className="clay-card p-4">
+    <div className="clay-card p-4 sm:p-5 border-white/5 shadow-xl">
       <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
-          <Filter className="h-3.5 w-3.5" />
-          Filters
+        <div className="flex items-center gap-2 text-xs text-slate-400 font-bold uppercase tracking-wider">
+          <div className="w-6 h-6 rounded-lg bg-amber-500/15 border border-amber-500/25 flex items-center justify-center text-amber-400 clay-icon-well">
+            <Filter className="h-3.5 w-3.5" />
+          </div>
+          Filters:
         </div>
 
         {/* Status Filter */}
         <select
           value={currentStatus}
           onChange={(e) => updateFilter("status", e.target.value)}
-          className="h-9 px-3 rounded-lg bg-slate-800 border border-slate-700 text-sm text-slate-200 focus:ring-amber-500 focus:border-amber-500 outline-none cursor-pointer"
+          className="clay-inset h-10 px-3.5 text-xs sm:text-sm text-slate-200 outline-none cursor-pointer appearance-none font-medium pr-8"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23f59e0b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
+            backgroundPosition: 'right 0.65rem center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: '1.2em 1.2em',
+          }}
         >
           <option value="all">All Statuses</option>
           {Object.values(ISSUE_STATUSES).map((s) => (
-            <option key={s.value} value={s.value}>
+            <option key={s.value} value={s.value} className="bg-slate-900 text-white">
               {s.label}
             </option>
           ))}
@@ -58,11 +66,17 @@ export function IssueFilters() {
         <select
           value={currentCategory}
           onChange={(e) => updateFilter("category", e.target.value)}
-          className="h-9 px-3 rounded-lg bg-slate-800 border border-slate-700 text-sm text-slate-200 focus:ring-amber-500 focus:border-amber-500 outline-none cursor-pointer"
+          className="clay-inset h-10 px-3.5 text-xs sm:text-sm text-slate-200 outline-none cursor-pointer appearance-none font-medium pr-8"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23f59e0b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
+            backgroundPosition: 'right 0.65rem center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: '1.2em 1.2em',
+          }}
         >
           <option value="all">All Categories</option>
           {Object.values(ISSUE_CATEGORIES).map((c) => (
-            <option key={c.value} value={c.value}>
+            <option key={c.value} value={c.value} className="bg-slate-900 text-white">
               {c.label}
             </option>
           ))}
@@ -72,11 +86,17 @@ export function IssueFilters() {
         <select
           value={currentPriority}
           onChange={(e) => updateFilter("priority", e.target.value)}
-          className="h-9 px-3 rounded-lg bg-slate-800 border border-slate-700 text-sm text-slate-200 focus:ring-amber-500 focus:border-amber-500 outline-none cursor-pointer"
+          className="clay-inset h-10 px-3.5 text-xs sm:text-sm text-slate-200 outline-none cursor-pointer appearance-none font-medium pr-8"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23f59e0b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
+            backgroundPosition: 'right 0.65rem center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: '1.2em 1.2em',
+          }}
         >
           <option value="all">All Priorities</option>
           {Object.values(ISSUE_PRIORITIES).map((p) => (
-            <option key={p.value} value={p.value}>
+            <option key={p.value} value={p.value} className="bg-slate-900 text-white">
               {p.label}
             </option>
           ))}
@@ -88,13 +108,14 @@ export function IssueFilters() {
             variant="ghost"
             size="sm"
             onClick={clearFilters}
-            className="gap-1.5 text-slate-400 hover:text-slate-200"
+            className="gap-1.5 text-amber-400 hover:text-amber-300 font-bold text-xs"
           >
             <X className="h-3.5 w-3.5" />
-            Clear
+            Reset
           </Button>
         )}
       </div>
     </div>
   );
 }
+
