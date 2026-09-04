@@ -13,7 +13,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "FixSL | Citizen-Powered Sri Lanka Infrastructure Reporting",
+  title: "FixSL",
   description:
     "Report road damage, broken streetlights, hazardous potholes, garbage pileups, and drainage issues across Sri Lanka. Track progress in real-time.",
   keywords: [
@@ -24,6 +24,11 @@ export const metadata: Metadata = {
     "Sri Lanka road repairs",
     "community tracking",
   ],
+  icons: {
+    icon: "/fixsl-img.png",
+    shortcut: "/fixsl-img.png",
+    apple: "/fixsl-img.png",
+  },
 };
 
 export default function RootLayout({

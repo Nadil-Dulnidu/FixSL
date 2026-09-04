@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
 import {
@@ -41,8 +42,14 @@ export function AdminSidebar() {
       {/* Header / Brand */}
       <div className="p-6 border-b border-white/5">
         <Link href="/admin" className="flex items-center gap-3 group">
-          <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20 border border-amber-300/40 group-hover:scale-105 transition-transform">
-            <Shield className="h-5 w-5 text-slate-950 stroke-[2.5]" />
+          <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-amber-400/20 via-slate-900 to-slate-950 p-1 flex items-center justify-center shadow-lg shadow-amber-500/15 border border-amber-400/30 clay-icon-well overflow-hidden group-hover:scale-105 transition-transform">
+            <Image
+              src="/fixsl-img.png"
+              alt="FixSL Logo"
+              width={40}
+              height={40}
+              className="w-full h-full object-contain"
+            />
           </div>
           <div>
             <span className="text-lg font-black text-white tracking-tight">

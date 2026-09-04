@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   ShieldAlert,
@@ -29,14 +30,21 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto">
         <div className="clay-card pointer-events-auto h-16 sm:h-18 px-4 sm:px-6 flex items-center justify-between border-white/10 backdrop-blur-2xl">
           {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/25 group-hover:scale-105 transition-transform border border-amber-300/40">
-              <ShieldAlert className="w-5 h-5 text-slate-950 stroke-[2.5]" />
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-amber-400/20 via-slate-900 to-slate-950 p-1 flex items-center justify-center shadow-lg shadow-amber-500/15 group-hover:scale-105 transition-transform border border-amber-400/30 clay-icon-well overflow-hidden">
+              <Image
+                src="/fixsl-img.png"
+                alt="FixSL Logo"
+                width={44}
+                height={44}
+                className="w-full h-full object-contain"
+                priority
+              />
             </div>
             <div className="flex flex-col">
-              <div className="flex items-center gap-1.5">
-                <span className="text-xl font-black tracking-tight text-white">
-                  Fix<span className="text-amber-400">SL</span>
+              <div className="flex items-center gap-1">
+                <span className="text-xl sm:text-2xl font-black tracking-tight text-white">
+                  Fix<span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-300">SL</span>
                 </span>
               </div>
             </div>

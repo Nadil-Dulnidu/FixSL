@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ShieldAlert, Heart, Phone, ExternalLink, MapPin } from "lucide-react";
 
 export function Footer() {
@@ -9,9 +10,15 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand Col */}
           <div className="space-y-4 md:col-span-1">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-md shadow-amber-500/20 border border-amber-300/40">
-                <ShieldAlert className="w-5 h-5 text-slate-950 stroke-[2.5]" />
+            <Link href="/" className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-amber-400/20 via-slate-900 to-slate-950 p-1 flex items-center justify-center shadow-md shadow-amber-500/10 border border-amber-400/30 clay-icon-well overflow-hidden">
+                <Image
+                  src="/fixsl-img.png"
+                  alt="FixSL Logo"
+                  width={36}
+                  height={36}
+                  className="w-full h-full object-contain"
+                />
               </div>
               <span className="text-xl font-black tracking-tight text-white">
                 Fix<span className="text-amber-400">SL</span>
