@@ -26,30 +26,31 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center p-10 text-center rounded-2xl border border-slate-800 bg-slate-900/40 max-w-lg mx-auto my-8",
+        "clay-card flex flex-col items-center justify-center p-10 sm:p-12 text-center max-w-lg mx-auto my-8 border-white/5",
         className
       )}
       {...props}
     >
-      <div className="w-14 h-14 rounded-2xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-center mb-4 text-slate-400 shadow-inner">
-        {icon || <FolderSearch className="w-7 h-7 text-amber-500/80" />}
+      <div className="w-16 h-16 rounded-2xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center mb-5 text-amber-400 clay-icon-well">
+        {icon || <FolderSearch className="w-8 h-8" />}
       </div>
-      <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+      <h3 className="text-xl font-bold text-white mb-2 tracking-tight">{title}</h3>
       <p className="text-sm text-slate-400 mb-6 max-w-sm leading-relaxed">
         {description}
       </p>
       {actionHref && actionText ? (
         <Link href={actionHref}>
-          <Button variant="default" className="gap-2">
-            <Plus className="w-4 h-4" />
+          <Button variant="default" className="gap-2 rounded-2xl font-bold shadow-amber-500/25">
+            <Plus className="w-4 h-4 stroke-[2.5]" />
             {actionText}
           </Button>
         </Link>
       ) : onAction && actionText ? (
-        <Button onClick={onAction} variant="default" className="gap-2">
+        <Button onClick={onAction} variant="default" className="gap-2 rounded-2xl font-bold shadow-amber-500/25">
           {actionText}
         </Button>
       ) : null}
     </div>
   );
 }
+

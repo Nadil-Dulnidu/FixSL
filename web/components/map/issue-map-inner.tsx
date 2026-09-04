@@ -105,7 +105,7 @@ export function IssueMapInner({ issues }: IssueMapInnerProps) {
   );
 
   return (
-    <div className="relative w-full h-full rounded-2xl overflow-hidden border border-slate-800 shadow-lg">
+    <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl clay-card">
       <MapContainer
         center={DEFAULT_MAP_CENTER}
         zoom={DEFAULT_MAP_ZOOM}
@@ -134,31 +134,34 @@ export function IssueMapInner({ issues }: IssueMapInnerProps) {
         ))}
       </MapContainer>
 
-      {/* Map legend overlay */}
-      <div className="absolute bottom-4 right-4 z-[1000] bg-slate-950/90 backdrop-blur-md border border-slate-800 rounded-xl p-3 shadow-lg">
-        <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider mb-2">
-          Legend
+      {/* Top Right: Issue count overlay */}
+      <div className="absolute top-4 right-4 z-[1000] px-3.5 py-1.5 rounded-full bg-slate-950/85 border border-white/10 backdrop-blur-xl text-xs font-bold text-slate-200 shadow-xl flex items-center gap-2 clay-pill">
+        <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+        <span>
+          <strong className="text-amber-400 font-mono">{issues.length}</strong> issue{issues.length !== 1 ? "s" : ""} mapped
+        </span>
+      </div>
+
+      {/* Bottom Right: Map legend overlay */}
+      <div className="absolute bottom-8 right-6 z-[1000] clay-card p-3.5 shadow-2xl border-white/10 min-w-[260px]">
+        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-2">
+          Hazard Categories
         </p>
-        <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+        <div className="grid grid-cols-2 gap-x-3.5 gap-y-1.5">
           {Object.entries(ISSUE_CATEGORIES).map(([key, config]) => (
             <div key={key} className="flex items-center gap-1.5">
               <span
-                className="w-2.5 h-2.5 rounded-full shrink-0"
+                className="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm"
                 style={{ backgroundColor: config.markerColor }}
               />
-              <span className="text-[10px] text-slate-300 whitespace-nowrap">
+              <span className="text-[10px] text-slate-300 font-medium whitespace-nowrap truncate">
                 {config.label}
               </span>
             </div>
           ))}
         </div>
       </div>
-
-      {/* Issue count overlay */}
-      <div className="absolute top-4 left-4 z-[1000] px-3 py-1.5 rounded-xl bg-slate-950/90 border border-slate-800 backdrop-blur-md text-[11px] font-medium text-slate-300 shadow-lg flex items-center gap-2">
-        <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-        {issues.length} issue{issues.length !== 1 ? "s" : ""} mapped
-      </div>
     </div>
   );
 }
+

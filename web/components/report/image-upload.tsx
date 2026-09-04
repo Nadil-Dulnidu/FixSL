@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { Camera, UploadCloud, X, Image as ImageIcon, CheckCircle2 } from "lucide-react";
+import { Camera, X, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import Image from "next/image";
 
 interface ImageUploadProps {
   onImageChange: (file: File | null) => void;
@@ -85,7 +84,7 @@ export function ImageUpload({ onImageChange, selectedFile }: ImageUploadProps) {
       />
 
       {previewUrl ? (
-        <div className="relative rounded-2xl overflow-hidden border border-amber-500/30 bg-slate-950 p-2 group shadow-xl">
+        <div className="relative rounded-2xl overflow-hidden border border-amber-500/30 bg-slate-950 p-2 group shadow-xl clay-card">
           <div className="relative h-60 w-full rounded-xl overflow-hidden bg-slate-900">
             {/* Image Preview */}
             <img
@@ -98,13 +97,13 @@ export function ImageUpload({ onImageChange, selectedFile }: ImageUploadProps) {
             <button
               type="button"
               onClick={handleRemove}
-              className="absolute top-3 right-3 p-2 rounded-xl bg-slate-950/80 hover:bg-red-500 text-white border border-slate-700 transition-colors shadow-lg"
+              className="absolute top-3 right-3 p-2 rounded-xl bg-slate-950/85 hover:bg-red-500 text-white border border-white/10 transition-colors shadow-lg cursor-pointer active:scale-95"
               title="Remove photo"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="absolute bottom-3 left-3 px-3 py-1 rounded-lg bg-slate-950/80 backdrop-blur-md border border-slate-800 text-[11px] font-medium text-amber-400 flex items-center gap-1.5">
+            <div className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-white/10 text-[11px] font-bold text-amber-400 flex items-center gap-1.5 clay-pill">
               <CheckCircle2 className="w-3.5 h-3.5" />
               Photo Attached ({selectedFile ? `${(selectedFile.size / (1024 * 1024)).toFixed(2)} MB` : ""})
             </div>
@@ -116,30 +115,30 @@ export function ImageUpload({ onImageChange, selectedFile }: ImageUploadProps) {
           onDrop={handleDrop}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
-          className={`cursor-pointer rounded-2xl border-2 border-dashed p-6 text-center transition-all flex flex-col items-center justify-center gap-3 ${
+          className={`cursor-pointer rounded-2xl border-2 border-dashed p-7 text-center transition-all flex flex-col items-center justify-center gap-3.5 ${
             isDragging
               ? "border-amber-400 bg-amber-500/10 scale-[0.99]"
-              : "border-slate-800 bg-slate-950/40 hover:border-slate-700 hover:bg-slate-900/40"
+              : "border-white/10 clay-inset hover:border-amber-500/40 hover:bg-slate-900/50"
           }`}
         >
-          <div className="w-12 h-12 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 shadow-inner">
-            <Camera className="w-6 h-6 text-amber-400" />
+          <div className="w-13 h-13 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 clay-icon-well">
+            <Camera className="w-6 h-6 stroke-[2.2]" />
           </div>
 
           <div className="space-y-1">
-            <p className="text-sm font-semibold text-white">
+            <p className="text-sm font-bold text-white">
               Snap a photo or drag & drop here
             </p>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-400">
               Supports JPEG, PNG, WebP up to 5MB
             </p>
           </div>
 
           <Button
             type="button"
-            variant="outline"
+            variant="secondary"
             size="sm"
-            className="text-xs rounded-xl border-slate-700 pointer-events-none"
+            className="text-xs rounded-xl pointer-events-none font-semibold px-4"
           >
             Browse Files
           </Button>
@@ -148,3 +147,4 @@ export function ImageUpload({ onImageChange, selectedFile }: ImageUploadProps) {
     </div>
   );
 }
+

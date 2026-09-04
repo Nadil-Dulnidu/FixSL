@@ -3,26 +3,26 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500",
+  "inline-flex items-center rounded-full px-3 py-1 text-xs font-bold transition-all focus:outline-none focus:ring-2 focus:ring-amber-500/50 clay-pill",
   {
     variants: {
       variant: {
         default:
-          "border-transparent bg-amber-500 text-slate-950 font-bold",
+          "bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-black shadow-amber-500/20",
         secondary:
-          "border-slate-700 bg-slate-800 text-slate-200",
+          "bg-slate-800/90 text-slate-200 border border-white/10 shadow-black/30",
         destructive:
-          "border-red-500/30 bg-red-500/15 text-red-400",
+          "bg-red-500/20 text-red-300 border border-red-500/30 shadow-red-500/10",
         outline:
-          "border-slate-700 text-slate-300",
+          "border border-slate-700/80 bg-slate-900/50 text-slate-300",
         amber:
-          "border-amber-500/30 bg-amber-500/10 text-amber-400",
+          "bg-amber-500/15 text-amber-400 border border-amber-500/30 shadow-amber-500/10",
         emerald:
-          "border-emerald-500/30 bg-emerald-500/10 text-emerald-400",
+          "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 shadow-emerald-500/10",
         blue:
-          "border-blue-500/30 bg-blue-500/10 text-blue-400",
+          "bg-blue-500/15 text-blue-400 border border-blue-500/30 shadow-blue-500/10",
         purple:
-          "border-purple-500/30 bg-purple-500/10 text-purple-400",
+          "bg-purple-500/15 text-purple-400 border border-purple-500/30 shadow-purple-500/10",
       },
     },
     defaultVariants: {
@@ -42,3 +42,4 @@ function Badge({ className, variant, ...props }: BadgeProps) {
 }
 
 export { Badge, badgeVariants };
+

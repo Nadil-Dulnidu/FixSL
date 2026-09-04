@@ -7,7 +7,6 @@ import {
   ShieldAlert,
   PlusCircle,
   MapPin,
-  Search,
   Menu,
   X,
   Lock,
@@ -26,129 +25,126 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-[#090d16]/85 backdrop-blur-xl transition-all">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
-        {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/25 group-hover:scale-105 transition-transform">
-            <ShieldAlert className="w-6 h-6 text-slate-950 stroke-[2.5]" />
-          </div>
-          <div className="flex flex-col">
-            <div className="flex items-center gap-1.5">
-              <span className="text-xl font-black tracking-tight text-white">
-                Fix<span className="text-amber-400">SL</span>
-              </span>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30">
-                Civic
-              </span>
+    <header className="sticky top-0 z-50 w-full pt-3 px-3 sm:px-6 lg:px-8 pointer-events-none">
+      <div className="max-w-7xl mx-auto">
+        <div className="clay-card pointer-events-auto h-16 sm:h-18 px-4 sm:px-6 flex items-center justify-between border-white/10 backdrop-blur-2xl">
+          {/* Brand Logo */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/25 group-hover:scale-105 transition-transform border border-amber-300/40">
+              <ShieldAlert className="w-5 h-5 text-slate-950 stroke-[2.5]" />
             </div>
-            <span className="text-[10px] text-slate-400 font-medium tracking-wide">
-              Sri Lanka Infrastructure
-            </span>
-          </div>
-        </Link>
+            <div className="flex flex-col">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xl font-black tracking-tight text-white">
+                  Fix<span className="text-amber-400">SL</span>
+                </span>
+              </div>
+            </div>
+          </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1">
-          {NAV_LINKS.map((link) => {
-            const isActive = pathname === link.href;
-            const Icon = link.icon;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all",
-                  isActive
-                    ? "bg-amber-500/15 text-amber-400 border border-amber-500/30"
-                    : "text-slate-300 hover:text-white hover:bg-slate-800/60"
-                )}
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-1.5 bg-slate-950/40 p-1.5 rounded-2xl border border-white/5 shadow-inner">
+            {NAV_LINKS.map((link) => {
+              const isActive = pathname === link.href;
+              const Icon = link.icon;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200",
+                    isActive
+                      ? "clay-btn-secondary text-amber-400 border-amber-500/30 shadow-md"
+                      : "text-slate-300 hover:text-white hover:bg-slate-800/50"
+                  )}
+                >
+                  <Icon className={cn("w-4 h-4", isActive ? "text-amber-400" : "text-slate-400")} />
+                  {link.label}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Action Buttons */}
+          <div className="hidden md:flex items-center gap-3">
+            <Link href="/report">
+              <Button
+                variant="default"
+                size="default"
+                className="gap-2 font-bold px-5 shadow-amber-500/25"
               >
-                <Icon className="w-4 h-4" />
-                {link.label}
-              </Link>
-            );
-          })}
-        </nav>
-
-        {/* Action Buttons */}
-        <div className="hidden md:flex items-center gap-3">
-          <Link href="/report">
-            <Button
-              variant="default"
-              size="default"
-              className="gap-2 shadow-amber-500/20 font-semibold"
-            >
-              <PlusCircle className="w-4 h-4" />
-              Report Issue
-            </Button>
-          </Link>
-          <Link href="/admin">
-            <Button
-              variant="outline"
-              size="icon"
-              className="rounded-xl border-slate-800 text-slate-400 hover:text-white hover:border-slate-700"
-              title="Authority & Admin Portal"
-            >
-              <Lock className="w-4 h-4" />
-            </Button>
-          </Link>
-        </div>
-
-        {/* Mobile Hamburger Button */}
-        <div className="flex md:hidden items-center gap-2">
-          <Link href="/report">
-            <Button variant="default" size="sm" className="gap-1.5 text-xs font-semibold px-3 h-9">
-              <PlusCircle className="w-3.5 h-3.5" />
-              Report
-            </Button>
-          </Link>
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2.5 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 hover:text-white"
-            aria-label="Toggle Navigation Menu"
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Drawer Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-b border-slate-800 bg-[#0c121e]/98 backdrop-blur-2xl px-4 pt-3 pb-6 space-y-2 animate-in fade-in slide-in-from-top-4 duration-200">
-          {NAV_LINKS.map((link) => {
-            const isActive = pathname === link.href;
-            const Icon = link.icon;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={cn(
-                  "flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition-all",
-                  isActive
-                    ? "bg-amber-500/15 text-amber-400 border border-amber-500/30"
-                    : "text-slate-300 hover:bg-slate-800/80 hover:text-white"
-                )}
+                <PlusCircle className="w-4 h-4 stroke-[2.5]" />
+                Report Issue
+              </Button>
+            </Link>
+            <Link href="/admin">
+              <Button
+                variant="secondary"
+                size="icon"
+                className="rounded-2xl text-slate-400 hover:text-white"
+                title="Authority & Admin Portal"
               >
-                <Icon className="w-5 h-5" />
-                {link.label}
-              </Link>
-            );
-          })}
-
-          <div className="pt-3 border-t border-slate-800 flex flex-col gap-2">
-            <Link
-              href="/admin"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800/60"
-            >
-              <Lock className="w-4 h-4" />
-              Admin & Municipal Login
+                <Lock className="w-4 h-4" />
+              </Button>
             </Link>
           </div>
+
+          {/* Mobile Hamburger Button */}
+          <div className="flex md:hidden items-center gap-2">
+            <Link href="/report">
+              <Button variant="default" size="sm" className="gap-1.5 text-xs font-bold px-3.5 h-9 rounded-xl">
+                <PlusCircle className="w-3.5 h-3.5 stroke-[2.5]" />
+                Report
+              </Button>
+            </Link>
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2.5 rounded-2xl border border-white/10 bg-slate-900 text-slate-300 hover:text-white shadow-md active:scale-95 transition-transform"
+              aria-label="Toggle Navigation Menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
-      )}
+
+        {/* Mobile Drawer Menu */}
+        {mobileMenuOpen && (
+          <div className="pointer-events-auto md:hidden mt-2 clay-card p-4 space-y-2 animate-in fade-in slide-in-from-top-3 duration-200">
+            {NAV_LINKS.map((link) => {
+              const isActive = pathname === link.href;
+              const Icon = link.icon;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(
+                    "flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold transition-all",
+                    isActive
+                      ? "clay-btn-secondary text-amber-400 border-amber-500/30"
+                      : "text-slate-300 hover:bg-slate-800/80 hover:text-white"
+                  )}
+                >
+                  <Icon className="w-5 h-5 text-amber-400" />
+                  {link.label}
+                </Link>
+              );
+            })}
+
+            <div className="pt-3 border-t border-white/10 flex flex-col gap-2">
+              <Link
+                href="/admin"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800/60"
+              >
+                <Lock className="w-4 h-4" />
+                Admin & Municipal Login
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
     </header>
   );
 }
+
