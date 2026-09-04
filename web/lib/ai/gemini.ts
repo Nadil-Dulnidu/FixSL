@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createVertex } from "@ai-sdk/google-vertex";
 import { generateObject } from "ai";
@@ -150,6 +152,19 @@ function getLanguageModel(modelName: string) {
       };
     }
 
+    if (credentials && typeof credentials.private_key === "string") {
+      credentials.private_key = credentials.private_key.replace(/\\n/g, "\n").trim();
+    }
+
+    let keyFilename = saKeyFile ? path.resolve(process.cwd(), saKeyFile) : undefined;
+    if (!keyFilename && (!credentials || !credentials.private_key)) {
+      const localFile = path.resolve(process.cwd(), "gcp-service-account.json");
+      if (fs.existsSync(localFile)) {
+        keyFilename = localFile;
+        logger.info("Using local gcp-service-account.json file as fallback keyFilename");
+      }
+    }
+
     const projectId =
       (credentials?.project_id as string) ||
       vertexProject ||
@@ -159,8 +174,8 @@ function getLanguageModel(modelName: string) {
       project: projectId,
       location: vertexLocation,
       googleAuthOptions: {
-        ...(credentials ? { credentials } : {}),
-        ...(saKeyFile ? { keyFilename: saKeyFile } : {}),
+        ...(credentials?.private_key ? { credentials } : {}),
+        ...(keyFilename ? { keyFilename } : {}),
         ...(projectId ? { projectId } : {}),
       },
     });
