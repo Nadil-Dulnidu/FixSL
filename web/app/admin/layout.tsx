@@ -1,5 +1,5 @@
+import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { getAdminAuth } from "@/lib/auth";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
 import { ShieldAlert } from "lucide-react";
 import { logger } from "@/lib/logger";
@@ -9,14 +9,17 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { userId, role, isAdmin } = await getAdminAuth();
+  const { userId, sessionClaims } = await auth();
 
   // Redirect to sign-in if not authenticated
   if (!userId) {
     redirect("/sign-in");
   }
 
-  if (!isAdmin) {
+  // Check for admin role in public metadata
+  const role = (sessionClaims?.metadata as Record<string, unknown>)?.role;
+
+  if (role !== "admin") {
     logger.warn("Unauthorized admin layout access", { userId, role });
 
     return (
@@ -44,8 +47,8 @@ export default async function AdminLayout({
   return (
     <div className="flex h-screen bg-[#090d16] overflow-hidden">
       <AdminSidebar />
-      <main className="flex-1 overflow-y-auto">
-        <div className="p-6 lg:p-8">{children}</div>
+      <main className="flex-1 overflow-y-auto pt-14 lg:pt-0">
+        <div className="p-4 sm:p-6 lg:p-8">{children}</div>
       </main>
     </div>
   );

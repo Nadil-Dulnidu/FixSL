@@ -178,7 +178,7 @@ export function IssueDetailCard({ issue }: IssueDetailCardProps) {
           )}
 
           {/* Mini map */}
-          <div className="h-60 sm:h-72 w-full rounded-2xl overflow-hidden border border-white/10 shadow-lg">
+          <div className="h-56 sm:h-72 w-full rounded-2xl overflow-hidden border border-white/10 shadow-lg">
             <IssueMiniMap
               latitude={issue.latitude}
               longitude={issue.longitude}
@@ -221,13 +221,13 @@ export function IssueDetailCard({ issue }: IssueDetailCardProps) {
         </div>
 
         {/* Action Buttons Row */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/5">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-4 border-t border-white/5">
           <Button
             type="button"
             onClick={handleShare}
             variant="secondary"
             size="sm"
-            className="gap-2 text-xs rounded-xl"
+            className="gap-2 text-xs rounded-xl h-11 sm:h-9 touch-manipulation min-h-[44px] sm:min-h-0 justify-center"
           >
             {copiedLink ? (
               <Check className="w-3.5 h-3.5 text-emerald-400" />
@@ -237,10 +237,10 @@ export function IssueDetailCard({ issue }: IssueDetailCardProps) {
             <span>{copiedLink ? "Link Copied!" : "Share Issue"}</span>
           </Button>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <Link
               href="/map"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-white/10 bg-slate-900/60 hover:bg-slate-800 text-xs font-semibold text-slate-300 hover:text-white transition-all clay-pill"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 sm:py-2 rounded-xl border border-white/10 bg-slate-900/60 hover:bg-slate-800 text-xs font-semibold text-slate-300 hover:text-white transition-all clay-pill min-h-[44px] sm:min-h-0 touch-manipulation"
             >
               <MapIcon className="w-3.5 h-3.5 text-amber-400" />
               <span>View On Map</span>
@@ -248,7 +248,7 @@ export function IssueDetailCard({ issue }: IssueDetailCardProps) {
 
             <Link
               href="/report"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-xs font-bold text-amber-400 transition-all clay-pill"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 sm:py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-xs font-bold text-amber-400 transition-all clay-pill min-h-[44px] sm:min-h-0 touch-manipulation"
             >
               <PlusCircle className="w-3.5 h-3.5" />
               <span>Report Another</span>

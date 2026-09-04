@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { ShieldAlert, Heart, Phone, ExternalLink, MapPin } from "lucide-react";
 
 export function Footer() {
@@ -10,15 +9,9 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand Col */}
           <div className="space-y-4 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-amber-400/20 via-slate-900 to-slate-950 p-1 flex items-center justify-center shadow-md shadow-amber-500/10 border border-amber-400/30 clay-icon-well overflow-hidden">
-                <Image
-                  src="/fixsl-img.png"
-                  alt="FixSL Logo"
-                  width={36}
-                  height={36}
-                  className="w-full h-full object-contain"
-                />
+            <Link href="/" className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-md shadow-amber-500/20 border border-amber-300/40">
+                <ShieldAlert className="w-5 h-5 text-slate-950 stroke-[2.5]" />
               </div>
               <span className="text-xl font-black tracking-tight text-white">
                 Fix<span className="text-amber-400">SL</span>
@@ -27,11 +20,6 @@ export function Footer() {
             <p className="text-xs text-slate-400 leading-relaxed">
               FixSL is an open civic initiative empowering Sri Lankan citizens to report, track, and verify public road hazards, broken utilities, and infrastructure breakdowns.
             </p>
-            <div className="flex items-center gap-2 text-xs text-slate-400">
-              <span>Made with</span>
-              <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500" />
-              <span>for Sri Lanka 🇱🇰</span>
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -69,21 +57,53 @@ export function Footer() {
               Emergency Hotlines
             </h4>
             <ul className="space-y-2 text-xs">
-              <li className="flex items-center justify-between p-2 rounded-xl bg-slate-900/60 border border-white/5 clay-inset">
-                <span className="text-slate-400">Police Emergency:</span>
-                <span className="font-bold text-amber-400 font-mono">119</span>
+              <li>
+                <a
+                  href="tel:119"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/60 hover:bg-slate-800/80 border border-white/5 hover:border-amber-500/30 clay-inset transition-colors group min-h-[44px] touch-manipulation"
+                >
+                  <span className="text-slate-400 group-hover:text-slate-200 flex items-center gap-1.5">
+                    <Phone className="w-3.5 h-3.5 text-amber-400" />
+                    Police Emergency:
+                  </span>
+                  <span className="font-bold text-amber-400 font-mono text-sm group-hover:underline">119</span>
+                </a>
               </li>
-              <li className="flex items-center justify-between p-2 rounded-xl bg-slate-900/60 border border-white/5 clay-inset">
-                <span className="text-slate-400">Suwa Seriya:</span>
-                <span className="font-bold text-amber-400 font-mono">1990</span>
+              <li>
+                <a
+                  href="tel:1990"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/60 hover:bg-slate-800/80 border border-white/5 hover:border-amber-500/30 clay-inset transition-colors group min-h-[44px] touch-manipulation"
+                >
+                  <span className="text-slate-400 group-hover:text-slate-200 flex items-center gap-1.5">
+                    <Phone className="w-3.5 h-3.5 text-amber-400" />
+                    Suwa Seriya Ambulance:
+                  </span>
+                  <span className="font-bold text-amber-400 font-mono text-sm group-hover:underline">1990</span>
+                </a>
               </li>
-              <li className="flex items-center justify-between p-2 rounded-xl bg-slate-900/60 border border-white/5 clay-inset">
-                <span className="text-slate-400">Colombo Municipal:</span>
-                <span className="font-bold text-amber-400 font-mono">011-2684290</span>
+              <li>
+                <a
+                  href="tel:0112684290"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/60 hover:bg-slate-800/80 border border-white/5 hover:border-amber-500/30 clay-inset transition-colors group min-h-[44px] touch-manipulation"
+                >
+                  <span className="text-slate-400 group-hover:text-slate-200 flex items-center gap-1.5">
+                    <Phone className="w-3.5 h-3.5 text-amber-400" />
+                    Colombo Municipal:
+                  </span>
+                  <span className="font-bold text-amber-400 font-mono text-sm group-hover:underline">011-2684290</span>
+                </a>
               </li>
-              <li className="flex items-center justify-between p-2 rounded-xl bg-slate-900/60 border border-white/5 clay-inset">
-                <span className="text-slate-400">RDA Hotline:</span>
-                <span className="font-bold text-amber-400 font-mono">1968</span>
+              <li>
+                <a
+                  href="tel:1968"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/60 hover:bg-slate-800/80 border border-white/5 hover:border-amber-500/30 clay-inset transition-colors group min-h-[44px] touch-manipulation"
+                >
+                  <span className="text-slate-400 group-hover:text-slate-200 flex items-center gap-1.5">
+                    <Phone className="w-3.5 h-3.5 text-amber-400" />
+                    RDA Highway Hotline:
+                  </span>
+                  <span className="font-bold text-amber-400 font-mono text-sm group-hover:underline">1968</span>
+                </a>
               </li>
             </ul>
           </div>

@@ -46,7 +46,7 @@ export function IssueFilters() {
         <select
           value={currentStatus}
           onChange={(e) => updateFilter("status", e.target.value)}
-          className="clay-inset h-10 px-3.5 text-xs sm:text-sm text-slate-200 outline-none cursor-pointer appearance-none font-medium pr-8"
+          className="clay-inset h-11 min-h-[44px] px-3.5 text-xs sm:text-sm text-slate-200 outline-none cursor-pointer appearance-none font-medium pr-8 flex-1 sm:flex-none touch-manipulation"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23f59e0b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
             backgroundPosition: 'right 0.65rem center',
@@ -66,7 +66,7 @@ export function IssueFilters() {
         <select
           value={currentCategory}
           onChange={(e) => updateFilter("category", e.target.value)}
-          className="clay-inset h-10 px-3.5 text-xs sm:text-sm text-slate-200 outline-none cursor-pointer appearance-none font-medium pr-8"
+          className="clay-inset h-11 min-h-[44px] px-3.5 text-xs sm:text-sm text-slate-200 outline-none cursor-pointer appearance-none font-medium pr-8 flex-1 sm:flex-none touch-manipulation"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23f59e0b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
             backgroundPosition: 'right 0.65rem center',
@@ -75,8 +75,8 @@ export function IssueFilters() {
           }}
         >
           <option value="all">All Categories</option>
-          {Object.values(ISSUE_CATEGORIES).map((c) => (
-            <option key={c.value} value={c.value} className="bg-slate-900 text-white">
+          {Object.entries(ISSUE_CATEGORIES).map(([key, c]) => (
+            <option key={c.value || key} value={c.value || key} className="bg-slate-900 text-white">
               {c.label}
             </option>
           ))}
@@ -86,7 +86,7 @@ export function IssueFilters() {
         <select
           value={currentPriority}
           onChange={(e) => updateFilter("priority", e.target.value)}
-          className="clay-inset h-10 px-3.5 text-xs sm:text-sm text-slate-200 outline-none cursor-pointer appearance-none font-medium pr-8"
+          className="clay-inset h-11 min-h-[44px] px-3.5 text-xs sm:text-sm text-slate-200 outline-none cursor-pointer appearance-none font-medium pr-8 flex-1 sm:flex-none touch-manipulation"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23f59e0b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
             backgroundPosition: 'right 0.65rem center',
@@ -108,7 +108,7 @@ export function IssueFilters() {
             variant="ghost"
             size="sm"
             onClick={clearFilters}
-            className="gap-1.5 text-amber-400 hover:text-amber-300 font-bold text-xs"
+            className="gap-1.5 text-amber-400 hover:text-amber-300 font-bold text-xs h-11 min-h-[44px] touch-manipulation"
           >
             <X className="h-3.5 w-3.5" />
             Reset

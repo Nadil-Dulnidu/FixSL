@@ -86,28 +86,28 @@ export function StatsCards({ stats }: StatsCardsProps) {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
       {cards.map((card) => (
         <div
           key={card.label}
-          className="clay-card clay-card-hover p-5 flex items-start gap-4 border-white/5"
+          className="clay-card clay-card-hover p-3.5 sm:p-5 flex flex-col sm:flex-row items-start gap-2.5 sm:gap-4 border-white/5"
         >
           <div
             className={cn(
-              "h-11 w-11 rounded-2xl flex items-center justify-center shrink-0 border clay-icon-well",
+              "h-9 w-9 sm:h-11 sm:w-11 rounded-2xl flex items-center justify-center shrink-0 border clay-icon-well",
               card.iconBg
             )}
           >
-            <card.icon className={cn("h-5 w-5 stroke-[2.2]", card.iconColor)} />
+            <card.icon className={cn("h-4 w-4 sm:h-5 sm:w-5 stroke-[2.2]", card.iconColor)} />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">
+            <p className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider mb-0.5 sm:mb-1 truncate">
               {card.label}
             </p>
-            <p className="text-2xl sm:text-3xl font-black font-mono text-white leading-none">
+            <p className="text-xl sm:text-2xl md:text-3xl font-black font-mono text-white leading-none">
               {card.value}
             </p>
-            <p className="text-xs text-slate-400 mt-1.5 truncate font-medium">
+            <p className="text-[10px] sm:text-xs text-slate-400 mt-1 truncate font-medium hidden sm:block">
               {card.description}
             </p>
           </div>
