@@ -7,7 +7,7 @@ import { uploadImageToCloudinary } from "@/lib/cloudinary";
 import { createIssueSchema } from "@/lib/validations/issue";
 import { formatTrackingId } from "@/lib/utils";
 import { ValidationError, DatabaseError } from "@/lib/errors";
-import type { Issue, IssueCategory } from "@/lib/types/database";
+import type { Issue, IssueCategory, IssuePriority } from "@/lib/types/database";
 
 export interface CreateIssueResult {
   issueId: string;
@@ -24,6 +24,7 @@ export async function createIssue(formData: FormData) {
   return safeAction("createIssue", async (): Promise<CreateIssueResult> => {
     // 1. Extract and parse raw fields from FormData
     const rawCategory = formData.get("category") as string;
+    const rawPriority = (formData.get("priority") as string) || "medium";
     const rawTitle = formData.get("title") as string;
     const rawDescription = formData.get("description") as string;
     const rawLatitude = parseFloat(formData.get("latitude") as string);
@@ -84,7 +85,9 @@ export async function createIssue(formData: FormData) {
       location_name: validated.location_name || null,
       image_url: imageUrl,
       status: "reported" as const,
-      priority: "medium" as const,
+      priority: (["low", "medium", "high", "critical"].includes(rawPriority)
+        ? rawPriority
+        : "medium") as IssuePriority,
     };
 
     const { data: insertedData, error: dbError } = await supabase
