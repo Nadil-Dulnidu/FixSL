@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@clerk/nextjs/server";
+import { getAdminAuth } from "@/lib/auth";
 import { safeAction } from "@/lib/action-utils";
 import { logger } from "@/lib/logger";
 import { getAdminSupabase } from "@/lib/supabase/server";
@@ -9,20 +9,18 @@ import { ForbiddenError, ValidationError, DatabaseError, NotFoundError } from "@
 import type { Issue, IssueStatus, IssuePriority } from "@/lib/types/database";
 
 /**
- * Verify the current user has admin role via Clerk session claims.
+ * Verify the current user has admin role via Clerk session claims or backend user API.
  * Throws ForbiddenError if not authorized.
  */
 async function requireAdmin(): Promise<string> {
-  const { userId, sessionClaims } = await auth();
+  const { userId, role, isAdmin } = await getAdminAuth();
 
   if (!userId) {
     logger.warn("Unauthorized admin action attempt — no userId");
     throw new ForbiddenError("You must be signed in to perform this action.");
   }
 
-  const role = (sessionClaims?.metadata as Record<string, unknown>)?.role;
-
-  if (role !== "admin") {
+  if (!isAdmin) {
     logger.warn("Forbidden admin action attempt", { userId, role });
     throw new ForbiddenError("Admin access required.");
   }
