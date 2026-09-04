@@ -8,9 +8,10 @@ export const feedbackTypeEnum = z.enum([
 ]);
 
 export const submitFeedbackSchema = z.object({
-  issue_id: z.string().uuid("Invalid issue ID format"),
+  issue_id: z.string().min(1, "Issue ID is required"),
   feedback_type: feedbackTypeEnum,
   session_id: z.string().min(1, "Session ID is required"),
 });
 
 export type SubmitFeedbackInput = z.infer<typeof submitFeedbackSchema>;
+
