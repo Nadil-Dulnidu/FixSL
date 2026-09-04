@@ -72,14 +72,15 @@ export function ReportSuccess({ result, onReset }: ReportSuccessProps) {
           Your Official Tracking Code
         </span>
         <div className="flex items-center justify-center gap-3">
-          <span className="text-3xl sm:text-4xl font-black font-mono text-amber-400 tracking-wider">
+          <span className="text-2xl sm:text-4xl font-black font-mono text-amber-400 tracking-wider">
             {result.trackingId}
           </span>
           <button
             type="button"
             onClick={handleCopy}
-            className="p-2.5 rounded-2xl border border-white/10 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white transition-all clay-icon-well cursor-pointer active:scale-95"
+            className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-2xl border border-white/10 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white transition-all clay-icon-well cursor-pointer active:scale-95 flex items-center justify-center touch-manipulation"
             title="Copy Code"
+            aria-label="Copy tracking code"
           >
             {copied ? <Check className="w-5 h-5 text-emerald-400" /> : <Copy className="w-5 h-5" />}
           </button>
@@ -110,9 +111,9 @@ export function ReportSuccess({ result, onReset }: ReportSuccessProps) {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 max-w-md mx-auto w-full">
         <Link href={`/issues/${result.trackingNumber}`} className="w-full sm:w-auto flex-1">
-          <Button variant="default" size="lg" className="w-full gap-2 font-bold rounded-2xl shadow-amber-500/25">
+          <Button variant="default" size="lg" className="w-full h-13 min-h-[48px] gap-2 font-bold rounded-2xl shadow-amber-500/25 touch-manipulation">
             <span>View Issue Status</span>
             <ArrowRight className="w-4 h-4 stroke-[2.5]" />
           </Button>
@@ -122,7 +123,7 @@ export function ReportSuccess({ result, onReset }: ReportSuccessProps) {
           onClick={handleShare}
           variant="secondary"
           size="lg"
-          className="w-full sm:w-auto gap-2 rounded-2xl font-semibold"
+          className="w-full sm:w-auto h-13 min-h-[48px] gap-2 rounded-2xl font-semibold touch-manipulation"
         >
           <Share2 className="w-4 h-4 text-amber-400" />
           <span>Share</span>
@@ -132,7 +133,7 @@ export function ReportSuccess({ result, onReset }: ReportSuccessProps) {
           onClick={onReset}
           variant="ghost"
           size="lg"
-          className="w-full sm:w-auto gap-2 text-slate-400 hover:text-white rounded-2xl"
+          className="w-full sm:w-auto h-13 min-h-[48px] gap-2 text-slate-400 hover:text-white rounded-2xl touch-manipulation"
         >
           <PlusCircle className="w-4 h-4" />
           <span>Report Another</span>

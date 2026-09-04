@@ -93,17 +93,18 @@ export function ImageUpload({ onImageChange, selectedFile }: ImageUploadProps) {
               className="w-full h-full object-cover rounded-xl"
             />
 
-            {/* Remove button */}
+            {/* Large 44x44px Remove button for easy thumb tap */}
             <button
               type="button"
               onClick={handleRemove}
-              className="absolute top-3 right-3 p-2 rounded-xl bg-slate-950/85 hover:bg-red-500 text-white border border-white/10 transition-colors shadow-lg cursor-pointer active:scale-95"
+              className="absolute top-3 right-3 w-11 h-11 min-w-[44px] min-h-[44px] rounded-2xl bg-slate-950/90 hover:bg-red-500 text-white border border-white/20 transition-colors shadow-2xl cursor-pointer active:scale-95 flex items-center justify-center touch-manipulation z-20"
               title="Remove photo"
+              aria-label="Remove photo"
             >
-              <X className="w-4 h-4" />
+              <X className="w-5 h-5" />
             </button>
 
-            <div className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-white/10 text-[11px] font-bold text-amber-400 flex items-center gap-1.5 clay-pill">
+            <div className="absolute bottom-3 left-3 px-3 py-1.5 rounded-full bg-slate-950/90 backdrop-blur-md border border-white/10 text-[11px] font-bold text-amber-400 flex items-center gap-1.5 clay-pill shadow-lg">
               <CheckCircle2 className="w-3.5 h-3.5" />
               Photo Attached ({selectedFile ? `${(selectedFile.size / (1024 * 1024)).toFixed(2)} MB` : ""})
             </div>
@@ -115,19 +116,19 @@ export function ImageUpload({ onImageChange, selectedFile }: ImageUploadProps) {
           onDrop={handleDrop}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
-          className={`cursor-pointer rounded-2xl border-2 border-dashed p-7 text-center transition-all flex flex-col items-center justify-center gap-3.5 ${
+          className={`cursor-pointer rounded-2xl border-2 border-dashed p-6 sm:p-7 text-center transition-all flex flex-col items-center justify-center gap-3.5 touch-manipulation active:scale-[0.99] ${
             isDragging
               ? "border-amber-400 bg-amber-500/10 scale-[0.99]"
               : "border-white/10 clay-inset hover:border-amber-500/40 hover:bg-slate-900/50"
           }`}
         >
-          <div className="w-13 h-13 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 clay-icon-well">
-            <Camera className="w-6 h-6 stroke-[2.2]" />
+          <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 clay-icon-well">
+            <Camera className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.2]" />
           </div>
 
           <div className="space-y-1">
             <p className="text-sm font-bold text-white">
-              Snap a photo or drag & drop here
+              Snap a photo or choose from library
             </p>
             <p className="text-xs text-slate-400">
               Supports JPEG, PNG, WebP up to 5MB
@@ -138,9 +139,9 @@ export function ImageUpload({ onImageChange, selectedFile }: ImageUploadProps) {
             type="button"
             variant="secondary"
             size="sm"
-            className="text-xs rounded-xl pointer-events-none font-semibold px-4"
+            className="text-xs rounded-xl pointer-events-none font-semibold px-4 min-h-[36px]"
           >
-            Browse Files
+            Browse Files / Camera
           </Button>
         </div>
       )}

@@ -25,7 +25,50 @@ export function IssuesTable({ issues }: IssuesTableProps) {
 
   return (
     <div className="clay-card overflow-hidden border-white/5 shadow-xl">
-      <div className="overflow-x-auto">
+      {/* Mobile Card View (screens < md) */}
+      <div className="md:hidden divide-y divide-white/5">
+        {issues.map((issue) => (
+          <Link
+            key={issue.id}
+            href={`/admin/issues/${issue.id}`}
+            className="block p-4 hover:bg-slate-800/40 transition-colors touch-manipulation active:bg-slate-800/60"
+          >
+            <div className="flex items-center justify-between gap-2 mb-2">
+              <span className="text-xs font-mono font-bold text-amber-400 bg-amber-500/15 px-2.5 py-0.5 rounded-full border border-amber-500/30 clay-pill">
+                {formatTrackingId(issue.tracking_number)}
+              </span>
+              <div className="flex items-center gap-1.5">
+                <IssueStatusBadge status={issue.status} />
+                <PriorityBadge priority={issue.priority} />
+              </div>
+            </div>
+
+            <h4 className="text-sm font-bold text-white mb-1.5 line-clamp-2">
+              {issue.title}
+            </h4>
+
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400 mt-2.5 pt-2 border-t border-white/5">
+              <div className="flex items-center gap-1.5 truncate max-w-[200px]">
+                {issue.location_name ? (
+                  <>
+                    <MapPin className="h-3 w-3 text-amber-400 shrink-0" />
+                    <span className="truncate">{issue.location_name}</span>
+                  </>
+                ) : (
+                  <span>Colombo, LK</span>
+                )}
+              </div>
+              <div className="flex items-center gap-2 text-slate-500">
+                <span>{formatRelativeTime(issue.created_at)}</span>
+                <ExternalLink className="h-3.5 w-3.5 text-amber-400" />
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      {/* Desktop Table View (screens >= md) */}
+      <div className="hidden md:block overflow-x-auto">
         <table className="w-full">
           <thead>
             <tr className="border-b border-white/5 bg-slate-950/30">
@@ -35,7 +78,7 @@ export function IssuesTable({ issues }: IssuesTableProps) {
               <th className="text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider px-5 py-3.5">
                 Issue
               </th>
-              <th className="text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider px-5 py-3.5 hidden md:table-cell">
+              <th className="text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider px-5 py-3.5">
                 Category
               </th>
               <th className="text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider px-5 py-3.5">
@@ -47,7 +90,7 @@ export function IssuesTable({ issues }: IssuesTableProps) {
               <th className="text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider px-5 py-3.5 hidden xl:table-cell">
                 Location
               </th>
-              <th className="text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider px-5 py-3.5 hidden sm:table-cell">
+              <th className="text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider px-5 py-3.5">
                 Reported
               </th>
               <th className="px-5 py-3.5 w-10" />
@@ -74,7 +117,7 @@ export function IssuesTable({ issues }: IssuesTableProps) {
                 </td>
 
                 {/* Category */}
-                <td className="px-5 py-4 hidden md:table-cell">
+                <td className="px-5 py-4">
                   <CategoryBadge
                     category={issue.category}
                     className="text-[10px]"
@@ -104,7 +147,7 @@ export function IssuesTable({ issues }: IssuesTableProps) {
                 </td>
 
                 {/* Date */}
-                <td className="px-5 py-4 hidden sm:table-cell">
+                <td className="px-5 py-4">
                   <span className="text-xs text-slate-400 font-medium">
                     {formatRelativeTime(issue.created_at)}
                   </span>
@@ -127,8 +170,8 @@ export function IssuesTable({ issues }: IssuesTableProps) {
       </div>
 
       {/* Row count */}
-      <div className="px-5 py-3 border-t border-white/5 text-xs text-slate-400 font-medium bg-slate-950/20">
-        Showing <span className="font-mono font-bold text-amber-400">{issues.length}</span> issue{issues.length !== 1 ? "s" : ""}
+      <div className="px-5 py-3 border-t border-white/5 text-xs text-slate-400 font-medium bg-slate-950/20 flex items-center justify-between">
+        <span>Showing <strong className="font-mono font-bold text-amber-400">{issues.length}</strong> issue{issues.length !== 1 ? "s" : ""}</span>
       </div>
     </div>
   );

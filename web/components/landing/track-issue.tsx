@@ -41,14 +41,14 @@ export function TrackIssue() {
             Enter your FixSL reference code (e.g., <strong className="text-amber-400 font-mono">FIX-1001</strong>) to check municipal repair status, community votes, and photo history.
           </p>
 
-          <form onSubmit={handleSearch} className="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
-            <div className="relative flex-1">
+          <form onSubmit={handleSearch} className="max-w-md mx-auto flex flex-col sm:flex-row gap-3 w-full">
+            <div className="relative flex-1 w-full">
               <Input
                 type="text"
                 value={trackingInput}
                 onChange={(e) => setTrackingInput(e.target.value)}
                 placeholder="e.g. FIX-1001 or 1001"
-                className="h-13 pl-4 pr-10 text-base font-mono rounded-2xl font-medium"
+                className="h-12 sm:h-13 pl-4 pr-10 text-sm sm:text-base font-mono rounded-2xl font-medium w-full"
               />
             </div>
             <Button
@@ -56,7 +56,7 @@ export function TrackIssue() {
               disabled={isSearching || !trackingInput.trim()}
               variant="default"
               size="lg"
-              className="h-13 px-6 gap-2 rounded-2xl font-bold whitespace-nowrap shadow-amber-500/25"
+              className="h-12 sm:h-13 px-6 gap-2 rounded-2xl font-bold whitespace-nowrap shadow-amber-500/25 w-full sm:w-auto touch-manipulation min-h-[48px]"
             >
               <span>Track Status</span>
               <ArrowRight className="w-4 h-4 stroke-[2.5]" />
@@ -64,13 +64,13 @@ export function TrackIssue() {
           </form>
 
           <div className="mt-7 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-400">
-            <span className="text-slate-500">Demo Reference IDs:</span>
+            <span className="text-slate-500 w-full sm:w-auto mb-1 sm:mb-0">Demo Reference IDs:</span>
             {["FIX-1001", "FIX-1003", "FIX-1005"].map((id) => (
               <button
                 key={id}
                 type="button"
                 onClick={() => setTrackingInput(id)}
-                className="px-2.5 py-1 rounded-lg bg-slate-900/80 border border-white/5 text-amber-400/90 hover:text-amber-300 font-mono text-xs clay-pill transition-colors cursor-pointer"
+                className="px-3 py-1.5 min-h-[36px] rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-white/10 hover:border-amber-500/30 text-amber-400 font-mono text-xs clay-pill transition-colors cursor-pointer touch-manipulation active:scale-95 flex items-center justify-center"
               >
                 {id}
               </button>

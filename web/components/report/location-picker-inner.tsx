@@ -149,7 +149,7 @@ export function LocationPickerInner({
   return (
     <div className="space-y-3">
       {/* Quick location chips & GPS Button */}
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-2.5">
         <div className="flex items-center gap-1.5 flex-wrap">
           <span className="text-xs text-slate-400 font-medium mr-1">Quick Pin:</span>
           {QUICK_LOCATIONS.map((loc) => (
@@ -159,7 +159,7 @@ export function LocationPickerInner({
               onClick={() => {
                 reverseGeocode(loc.lat, loc.lng);
               }}
-              className="text-xs px-2.5 py-1 rounded-lg border border-slate-800 bg-slate-900/90 text-slate-300 hover:text-amber-400 hover:border-amber-500/40 transition-colors"
+              className="text-xs px-3 py-1.5 min-h-[36px] rounded-xl border border-slate-800 hover:border-amber-500/40 bg-slate-900/90 text-slate-300 hover:text-amber-400 transition-colors touch-manipulation active:scale-95 flex items-center justify-center cursor-pointer"
             >
               {loc.name}
             </button>
@@ -172,7 +172,7 @@ export function LocationPickerInner({
           disabled={isLocating}
           variant="outline"
           size="sm"
-          className="gap-1.5 text-xs border-amber-500/30 text-amber-400 hover:bg-amber-500/10 h-8 shrink-0"
+          className="gap-1.5 text-xs border-amber-500/30 text-amber-400 hover:bg-amber-500/10 h-9 min-h-[36px] px-3.5 rounded-xl shrink-0 touch-manipulation"
         >
           {isLocating ? (
             <Loader2 className="w-3.5 h-3.5 animate-spin" />

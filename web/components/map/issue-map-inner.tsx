@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { DEFAULT_MAP_CENTER, DEFAULT_MAP_ZOOM, ISSUE_CATEGORIES } from "@/lib/constants";
@@ -93,6 +93,8 @@ interface IssueMapInnerProps {
 }
 
 export function IssueMapInner({ issues }: IssueMapInnerProps) {
+  const [legendOpen, setLegendOpen] = React.useState(false);
+
   // Memoize markers to prevent re-renders
   const markers = useMemo(
     () =>
@@ -105,14 +107,16 @@ export function IssueMapInner({ issues }: IssueMapInnerProps) {
   );
 
   return (
-    <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl clay-card">
+    <div className="relative w-full h-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl clay-card">
       <MapContainer
         center={DEFAULT_MAP_CENTER}
         zoom={DEFAULT_MAP_ZOOM}
+        zoomControl={false}
         scrollWheelZoom={true}
         className="w-full h-full"
-        style={{ minHeight: "500px" }}
+        style={{ minHeight: "450px" }}
       >
+        <ZoomControl position="bottomleft" />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -135,30 +139,46 @@ export function IssueMapInner({ issues }: IssueMapInnerProps) {
       </MapContainer>
 
       {/* Top Right: Issue count overlay */}
-      <div className="absolute top-4 right-4 z-[1000] px-3.5 py-1.5 rounded-full bg-slate-950/85 border border-white/10 backdrop-blur-xl text-xs font-bold text-slate-200 shadow-xl flex items-center gap-2 clay-pill">
-        <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-[1000] px-3 sm:px-3.5 py-1.5 rounded-full bg-slate-950/90 border border-white/10 backdrop-blur-xl text-[11px] sm:text-xs font-bold text-slate-200 shadow-xl flex items-center gap-2 clay-pill">
+        <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shrink-0" />
         <span>
-          <strong className="text-amber-400 font-mono">{issues.length}</strong> issue{issues.length !== 1 ? "s" : ""} mapped
+          <strong className="text-amber-400 font-mono">{issues.length}</strong> issue{issues.length !== 1 ? "s" : ""}
         </span>
       </div>
 
-      {/* Bottom Right: Map legend overlay */}
-      <div className="absolute bottom-8 right-6 z-[1000] clay-card p-3.5 shadow-2xl border-white/10 min-w-[260px]">
-        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-2">
-          Hazard Categories
-        </p>
-        <div className="grid grid-cols-2 gap-x-3.5 gap-y-1.5">
-          {Object.entries(ISSUE_CATEGORIES).map(([key, config]) => (
-            <div key={key} className="flex items-center gap-1.5">
-              <span
-                className="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm"
-                style={{ backgroundColor: config.markerColor }}
-              />
-              <span className="text-[10px] text-slate-300 font-medium whitespace-nowrap truncate">
-                {config.label}
-              </span>
-            </div>
-          ))}
+      {/* Bottom Right: Map legend overlay (Collapsible on mobile) */}
+      <div className="absolute bottom-4 right-3 sm:bottom-6 sm:right-4 z-[1000]">
+        {/* Mobile toggle button */}
+        <button
+          onClick={() => setLegendOpen(!legendOpen)}
+          className="sm:hidden px-3 py-1.5 rounded-xl bg-slate-950/90 border border-white/10 text-[10px] font-bold uppercase tracking-wider text-slate-300 shadow-xl backdrop-blur-md flex items-center gap-1.5 clay-pill"
+        >
+          <span>Legend</span>
+          <span className="text-amber-400">{legendOpen ? "✕" : "ℹ"}</span>
+        </button>
+
+        {/* Legend Content */}
+        <div
+          className={`clay-card p-3 sm:p-3.5 shadow-2xl border-white/10 min-w-[220px] sm:min-w-[260px] backdrop-blur-xl ${
+            legendOpen ? "block mt-2" : "hidden sm:block"
+          }`}
+        >
+          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-2">
+            Hazard Categories
+          </p>
+          <div className="grid grid-cols-2 gap-x-3 gap-y-1.5">
+            {Object.entries(ISSUE_CATEGORIES).map(([key, config]) => (
+              <div key={key} className="flex items-center gap-1.5">
+                <span
+                  className="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm"
+                  style={{ backgroundColor: config.markerColor }}
+                />
+                <span className="text-[10px] text-slate-300 font-medium whitespace-nowrap truncate">
+                  {config.label}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

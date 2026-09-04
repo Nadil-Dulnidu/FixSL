@@ -36,6 +36,32 @@ body {
     radial-gradient(circle 500px at 90% 60%, rgba(245, 158, 11, 0.05), transparent);
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure inputs on mobile don't trigger iOS Safari auto-zoom (min 16px) */
+@media (max-width: 640px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Mobile Safe Areas and Touch Ergonomics */
+.touch-manipulation {
+  touch-action: manipulation;
+}
+
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.min-touch-target {
+  min-height: 44px;
+  min-width: 44px;
 }
 
 /* ============================================================
