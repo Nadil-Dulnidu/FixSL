@@ -172,3 +172,87 @@ export async function getIssueByTrackingId(identifier: string | number) {
     return (data as unknown as Issue) || null;
   });
 }
+
+// ──────────────────────────────────────────────
+// Community Map — Fetch All Issues for Map Display
+// ──────────────────────────────────────────────
+
+export interface MapIssuesFilter {
+  status?: string;
+  category?: string;
+}
+
+/**
+ * Server Action: Fetch all issues for the community map with optional filters
+ */
+export async function getMapIssues(filters?: MapIssuesFilter) {
+  return safeAction("getMapIssues", async (): Promise<Issue[]> => {
+    const supabase = getAdminSupabase();
+
+    let query = supabase
+      .from("issues")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (filters?.status && filters.status !== "all") {
+      query = query.eq("status", filters.status);
+    }
+    if (filters?.category && filters.category !== "all") {
+      query = query.eq("category", filters.category);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      logger.error("Failed to fetch map issues", { error: error.message, filters });
+      throw new DatabaseError("Could not load map data.");
+    }
+
+    return (data as unknown as Issue[]) || [];
+  });
+}
+
+// ──────────────────────────────────────────────
+// Community Map — Aggregate Statistics
+// ──────────────────────────────────────────────
+
+export interface MapStats {
+  total: number;
+  byStatus: Record<string, number>;
+  byCategory: Record<string, number>;
+  resolutionRate: number;
+}
+
+/**
+ * Server Action: Compute aggregated statistics for the map analytics panel
+ */
+export async function getMapStats() {
+  return safeAction("getMapStats", async (): Promise<MapStats> => {
+    const supabase = getAdminSupabase();
+
+    const { data, error } = await supabase
+      .from("issues")
+      .select("status, category");
+
+    if (error) {
+      logger.error("Failed to fetch map stats", { error: error.message });
+      throw new DatabaseError("Could not load map statistics.");
+    }
+
+    const rows = (data as unknown as Array<{ status: string; category: string }>) || [];
+    const total = rows.length;
+
+    const byStatus: Record<string, number> = {};
+    const byCategory: Record<string, number> = {};
+
+    for (const row of rows) {
+      byStatus[row.status] = (byStatus[row.status] || 0) + 1;
+      byCategory[row.category] = (byCategory[row.category] || 0) + 1;
+    }
+
+    const resolved = byStatus["resolved"] || 0;
+    const resolutionRate = total > 0 ? Math.round((resolved / total) * 100) : 0;
+
+    return { total, byStatus, byCategory, resolutionRate };
+  });
+}
