@@ -14,7 +14,7 @@ export function HeroSection() {
 
 
         {/* Main Headline */}
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.1] max-w-4xl mx-auto">
+        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.15] sm:leading-[1.1] max-w-4xl mx-auto">
           Report Hazards.{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500">
             Fix Sri Lanka&apos;s
@@ -23,28 +23,28 @@ export function HeroSection() {
         </h1>
 
         {/* Subtitle */}
-        <p className="mt-6 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
+        <p className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
           From dangerous potholes and broken streetlights to flooded drains and overflowing waste. Drop a pin, snap a photo, and join thousands of citizens holding municipal authorities accountable.
         </p>
 
         {/* Call to Actions */}
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
-          <Link href="/report" className="w-full sm:w-auto">
+        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-md mx-auto w-full">
+          <Link href="/report" className="w-full sm:w-auto flex-1">
             <Button
               size="lg"
               variant="default"
-              className="w-full sm:w-auto gap-2.5 text-base font-bold shadow-amber-500/30 h-14 px-8"
+              className="w-full gap-2.5 text-sm sm:text-base font-bold shadow-amber-500/30 h-13 sm:h-14 px-6 sm:px-8 touch-manipulation min-h-[48px]"
             >
               <PlusCircle className="w-5 h-5 stroke-[2.5]" />
               Report an Issue
             </Button>
           </Link>
 
-          <Link href="/map" className="w-full sm:w-auto">
+          <Link href="/map" className="w-full sm:w-auto flex-1">
             <Button
               size="lg"
               variant="secondary"
-              className="w-full sm:w-auto gap-2.5 text-base font-semibold h-14 px-8"
+              className="w-full gap-2.5 text-sm sm:text-base font-semibold h-13 sm:h-14 px-6 sm:px-8 touch-manipulation min-h-[48px]"
             >
               <MapPin className="w-5 h-5 text-amber-400" />
               Explore Live Map

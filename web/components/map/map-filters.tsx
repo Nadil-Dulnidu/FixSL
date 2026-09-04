@@ -27,7 +27,7 @@ export function MapFilters({
   };
 
   return (
-    <div className="clay-card p-4 sm:p-5 space-y-4 border-white/5 shadow-xl">
+    <div className="p-4 sm:p-4.5 space-y-3.5 rounded-2xl bg-slate-950/40 border border-white/5 shadow-inner">
       {/* Header */}
       <div className="flex items-center justify-between pb-2 border-b border-white/5">
         <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2">
@@ -52,7 +52,7 @@ export function MapFilters({
         <select
           value={selectedCategory}
           onChange={(e) => onCategoryChange(e.target.value)}
-          className="clay-inset w-full h-10 px-3 text-xs sm:text-sm text-slate-200 outline-none cursor-pointer appearance-none font-medium"
+          className="clay-inset w-full h-11 min-h-[44px] px-3.5 text-xs sm:text-sm text-slate-200 outline-none cursor-pointer appearance-none font-medium touch-manipulation"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23f59e0b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
             backgroundPosition: 'right 0.75rem center',
@@ -75,7 +75,7 @@ export function MapFilters({
         <select
           value={selectedStatus}
           onChange={(e) => onStatusChange(e.target.value)}
-          className="clay-inset w-full h-10 px-3 text-xs sm:text-sm text-slate-200 outline-none cursor-pointer appearance-none font-medium"
+          className="clay-inset w-full h-11 min-h-[44px] px-3.5 text-xs sm:text-sm text-slate-200 outline-none cursor-pointer appearance-none font-medium touch-manipulation"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23f59e0b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
             backgroundPosition: 'right 0.75rem center',

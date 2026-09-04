@@ -134,7 +134,7 @@ export function VerificationPanel({
           onClick={() => handleVote("confirm")}
           disabled={isPending || Boolean(userVotedType)}
           className={cn(
-            "relative h-auto py-3.5 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer",
+            "relative min-h-[48px] py-3.5 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer touch-manipulation active:scale-[0.98]",
             userVotedType === "confirm"
               ? "clay-card bg-amber-500/20 border-amber-400 text-amber-300 shadow-md shadow-amber-500/15 ring-2 ring-amber-400/40"
               : "clay-btn-secondary hover:border-amber-500/40 text-slate-200 hover:text-white"
@@ -168,7 +168,7 @@ export function VerificationPanel({
           onClick={() => handleVote("dispute")}
           disabled={isPending || Boolean(userVotedType)}
           className={cn(
-            "relative h-auto py-3.5 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer",
+            "relative min-h-[48px] py-3.5 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer touch-manipulation active:scale-[0.98]",
             userVotedType === "dispute"
               ? "clay-card bg-rose-500/20 border-rose-400 text-rose-300 shadow-md shadow-rose-500/15 ring-2 ring-rose-400/40"
               : "clay-btn-secondary hover:border-slate-500 text-slate-300 hover:text-white"

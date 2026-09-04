@@ -18,7 +18,7 @@ interface MapStatsProps {
 
 export function MapStatsPanel({ stats }: MapStatsProps) {
   return (
-    <div className="clay-card p-4 sm:p-5 space-y-5 border-white/5 shadow-xl">
+    <div className="p-4 sm:p-4.5 space-y-4 rounded-2xl bg-slate-950/40 border border-white/5 shadow-inner">
       {/* Header */}
       <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2 pb-2 border-b border-white/5">
         <div className="w-6 h-6 rounded-lg bg-amber-500/15 border border-amber-500/25 flex items-center justify-center text-amber-400 clay-icon-well">

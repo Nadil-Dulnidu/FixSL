@@ -140,7 +140,7 @@ export function ResolutionFeedback({
             onClick={() => handleVote("resolution_confirm")}
             disabled={isPending || Boolean(userVotedType)}
             className={cn(
-              "relative h-auto py-3.5 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer",
+              "relative min-h-[48px] py-3.5 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer touch-manipulation active:scale-[0.98]",
               userVotedType === "resolution_confirm"
                 ? "clay-card bg-emerald-500/20 border-emerald-400 text-emerald-300 shadow-md shadow-emerald-500/15 ring-2 ring-emerald-400/40"
                 : "clay-btn-secondary hover:border-emerald-500/40 text-slate-200 hover:text-white"
@@ -174,7 +174,7 @@ export function ResolutionFeedback({
             onClick={() => handleVote("resolution_dispute")}
             disabled={isPending || Boolean(userVotedType)}
             className={cn(
-              "relative h-auto py-3.5 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer",
+              "relative min-h-[48px] py-3.5 px-4 flex items-center justify-between gap-3 rounded-2xl font-semibold transition-all text-sm cursor-pointer touch-manipulation active:scale-[0.98]",
               userVotedType === "resolution_dispute"
                 ? "clay-card bg-rose-500/20 border-rose-400 text-rose-300 shadow-md shadow-rose-500/15 ring-2 ring-rose-400/40"
                 : "clay-btn-secondary hover:border-red-500/40 text-slate-300 hover:text-white"
