@@ -113,10 +113,10 @@ export function ResolutionFeedback({
         <div className="absolute top-0 right-0 w-40 h-40 bg-emerald-500/8 rounded-full blur-3xl pointer-events-none" />
 
         {/* Header */}
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex items-start justify-between gap-2.5">
           <div className="space-y-1">
-            <div className="flex items-center gap-2 text-white font-bold text-base">
-              <div className="w-7 h-7 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center text-emerald-400 clay-icon-well">
+            <div className="flex items-center gap-2 text-white font-bold text-sm sm:text-base">
+              <div className="w-7 h-7 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center text-emerald-400 clay-icon-well shrink-0">
                 <CheckCircle2 className="w-4 h-4" />
               </div>
               <span>Resolution Confirmation</span>
@@ -126,7 +126,7 @@ export function ResolutionFeedback({
             </p>
           </div>
 
-          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 border border-white/5 text-[11px] font-mono text-slate-400 shrink-0 clay-pill">
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900/80 border border-white/5 text-[10px] sm:text-[11px] font-mono text-slate-400 shrink-0 clay-pill">
             <Users className="w-3.5 h-3.5 text-emerald-400" />
             <span>{totalVotes} Verifications</span>
           </div>

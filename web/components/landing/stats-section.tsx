@@ -57,13 +57,13 @@ export async function StatsSection() {
   ];
 
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-12 sm:py-16 md:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-xl mx-auto mb-14">
+        <div className="text-center max-w-xl mx-auto mb-10 sm:mb-14">
           <span className="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-3.5 py-1 rounded-full border border-amber-500/20 clay-pill">
             Real-Time Metrics
           </span>
-          <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight mt-3">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight mt-3">
             Live Civic Impact
           </h2>
           <p className="text-xs sm:text-sm text-slate-400 mt-2.5 leading-relaxed">
@@ -71,28 +71,28 @@ export async function StatsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {STATS.map((item) => {
             const Icon = item.icon;
             return (
               <div
                 key={item.label}
-                className="clay-card clay-card-hover p-6 sm:p-7 flex flex-col justify-between border-white/5"
+                className="clay-card clay-card-hover p-5 sm:p-7 flex flex-col justify-between border-white/5 min-h-[160px]"
               >
-                <div className="flex items-center justify-between mb-5">
+                <div className="flex items-center justify-between mb-4 sm:mb-5">
                   <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
                     {item.label}
                   </span>
-                  <div className={`w-10 h-10 rounded-2xl flex items-center justify-center border clay-icon-well ${item.color}`}>
+                  <div className={`w-10 h-10 rounded-2xl flex items-center justify-center border clay-icon-well shrink-0 ${item.color}`}>
                     <Icon className="w-5 h-5 stroke-[2.2]" />
                   </div>
                 </div>
 
                 <div>
-                  <span className="text-4xl sm:text-5xl font-black text-white font-mono tracking-tight">
+                  <span className="text-3xl sm:text-4xl lg:text-5xl font-black text-white font-mono tracking-tight">
                     {item.value}
                   </span>
-                  <p className="text-xs text-slate-400 mt-2 font-medium">{item.subtext}</p>
+                  <p className="text-xs text-slate-400 mt-1.5 sm:mt-2 font-medium">{item.subtext}</p>
                 </div>
               </div>
             );

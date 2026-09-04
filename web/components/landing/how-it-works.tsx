@@ -38,40 +38,40 @@ const STEPS = [
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-20 md:py-28 bg-[#070b14]/70 border-y border-white/5">
+    <section id="how-it-works" className="py-14 sm:py-20 md:py-28 bg-[#070b14]/70 border-y border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
           <span className="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-3.5 py-1 rounded-full border border-amber-500/20 clay-pill">
             Lifecycle Workflow
           </span>
-          <h2 className="text-3xl sm:text-4xl font-black text-white mt-3 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mt-3 tracking-tight">
             How FixSL Fixes Sri Lanka
           </h2>
-          <p className="text-slate-400 text-sm mt-3 leading-relaxed">
+          <p className="text-slate-400 text-xs sm:text-sm mt-2.5 sm:mt-3 leading-relaxed">
             A transparent 4-stage civic lifecycle designed to turn citizen reports into verified, completed infrastructure fixes.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {STEPS.map((stepItem, idx) => {
             const Icon = stepItem.icon;
             return (
               <div
                 key={stepItem.step}
-                className="clay-card clay-card-hover p-6 sm:p-7 flex flex-col justify-between relative group border-white/5"
+                className="clay-card clay-card-hover p-5 sm:p-7 flex flex-col justify-between relative group border-white/5"
               >
                 {/* Step number indicator */}
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform clay-icon-well">
-                    <Icon className="w-6 h-6 stroke-[2.2]" />
+                <div className="flex items-center justify-between mb-5 sm:mb-6">
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform clay-icon-well">
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.2]" />
                   </div>
-                  <span className="text-3xl font-black font-mono text-slate-700/80 group-hover:text-amber-400/40 transition-colors">
+                  <span className="text-2xl sm:text-3xl font-black font-mono text-slate-700/80 group-hover:text-amber-400/40 transition-colors">
                     {stepItem.step}
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-amber-300 transition-colors tracking-tight">
+                  <h3 className="text-base sm:text-lg font-bold text-white mb-1.5 sm:mb-2 group-hover:text-amber-300 transition-colors tracking-tight">
                     {stepItem.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
@@ -79,7 +79,7 @@ export function HowItWorks() {
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-white/5 flex items-center gap-2 text-xs font-semibold text-slate-500">
+                <div className="mt-5 sm:mt-6 pt-3.5 sm:pt-4 border-t border-white/5 flex items-center gap-2 text-xs font-semibold text-slate-500">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-slate-900/60 border border-white/5 text-[11px] font-mono text-slate-400">
                     Stage {idx + 1} of 4
                   </span>

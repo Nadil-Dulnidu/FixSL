@@ -93,6 +93,8 @@ interface IssueMapInnerProps {
 }
 
 export function IssueMapInner({ issues }: IssueMapInnerProps) {
+  const [legendOpen, setLegendOpen] = React.useState(false);
+
   // Memoize markers to prevent re-renders
   const markers = useMemo(
     () =>
@@ -111,7 +113,6 @@ export function IssueMapInner({ issues }: IssueMapInnerProps) {
         zoom={DEFAULT_MAP_ZOOM}
         scrollWheelZoom={true}
         className="w-full h-full"
-        style={{ minHeight: "500px" }}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -124,8 +125,8 @@ export function IssueMapInner({ issues }: IssueMapInnerProps) {
           <Marker key={issue.id} position={position} icon={icon}>
             <Popup
               closeButton={true}
-              minWidth={220}
-              maxWidth={280}
+              minWidth={200}
+              maxWidth={260}
               className="fixsl-popup"
             >
               <MapMarkerPopup issue={issue} />
@@ -135,19 +136,19 @@ export function IssueMapInner({ issues }: IssueMapInnerProps) {
       </MapContainer>
 
       {/* Top Right: Issue count overlay */}
-      <div className="absolute top-4 right-4 z-[1000] px-3.5 py-1.5 rounded-full bg-slate-950/85 border border-white/10 backdrop-blur-xl text-xs font-bold text-slate-200 shadow-xl flex items-center gap-2 clay-pill">
+      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-[1000] px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-slate-950/85 border border-white/10 backdrop-blur-xl text-[11px] sm:text-xs font-bold text-slate-200 shadow-xl flex items-center gap-1.5 sm:gap-2 clay-pill">
         <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
         <span>
-          <strong className="text-amber-400 font-mono">{issues.length}</strong> issue{issues.length !== 1 ? "s" : ""} mapped
+          <strong className="text-amber-400 font-mono">{issues.length}</strong> {issues.length === 1 ? "issue" : "issues"}
         </span>
       </div>
 
-      {/* Bottom Right: Map legend overlay */}
-      <div className="absolute bottom-8 right-6 z-[1000] clay-card p-3.5 shadow-2xl border-white/10 min-w-[260px]">
+      {/* Bottom Right: Map legend overlay (Desktop always visible, Mobile toggleable) */}
+      <div className="hidden sm:block absolute bottom-6 right-6 z-[1000] clay-card p-3.5 shadow-2xl border-white/10 min-w-[240px]">
         <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-2">
           Hazard Categories
         </p>
-        <div className="grid grid-cols-2 gap-x-3.5 gap-y-1.5">
+        <div className="grid grid-cols-2 gap-x-3 gap-y-1.5">
           {Object.entries(ISSUE_CATEGORIES).map(([key, config]) => (
             <div key={key} className="flex items-center gap-1.5">
               <span
@@ -160,6 +161,40 @@ export function IssueMapInner({ issues }: IssueMapInnerProps) {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Mobile Legend Floating Trigger */}
+      <div className="sm:hidden absolute top-3 left-3 z-[1000]">
+        <button
+          type="button"
+          onClick={() => setLegendOpen(!legendOpen)}
+          className="px-2.5 py-1 rounded-full bg-slate-950/85 border border-white/10 backdrop-blur-xl text-[10px] font-bold text-slate-300 shadow-xl flex items-center gap-1.5 clay-pill"
+          aria-label="Toggle map legend"
+        >
+          <span className="w-2 h-2 rounded-full bg-amber-400" />
+          <span>Legend</span>
+        </button>
+
+        {legendOpen && (
+          <div className="mt-2 clay-card p-3 shadow-2xl border-white/10 w-48 animate-drawer">
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1.5">
+              Categories
+            </p>
+            <div className="space-y-1">
+              {Object.entries(ISSUE_CATEGORIES).map(([key, config]) => (
+                <div key={key} className="flex items-center gap-1.5">
+                  <span
+                    className="w-2 h-2 rounded-full shrink-0 shadow-sm"
+                    style={{ backgroundColor: config.markerColor }}
+                  />
+                  <span className="text-[10px] text-slate-300 font-medium truncate">
+                    {config.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

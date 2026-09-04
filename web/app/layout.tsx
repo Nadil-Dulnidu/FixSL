@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
@@ -11,6 +11,13 @@ const poppins = Poppins({
   variable: "--font-poppins",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#090d16",
+};
 
 export const metadata: Metadata = {
   title: "FixSL | Citizen-Powered Sri Lanka Infrastructure Reporting",

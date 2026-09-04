@@ -149,9 +149,9 @@ export function LocationPickerInner({
   return (
     <div className="space-y-3">
       {/* Quick location chips & GPS Button */}
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         <div className="flex items-center gap-1.5 flex-wrap">
-          <span className="text-xs text-slate-400 font-medium mr-1">Quick Pin:</span>
+          <span className="text-xs text-slate-400 font-medium mr-0.5">Quick Pin:</span>
           {QUICK_LOCATIONS.map((loc) => (
             <button
               key={loc.name}
@@ -159,7 +159,7 @@ export function LocationPickerInner({
               onClick={() => {
                 reverseGeocode(loc.lat, loc.lng);
               }}
-              className="text-xs px-2.5 py-1 rounded-lg border border-slate-800 bg-slate-900/90 text-slate-300 hover:text-amber-400 hover:border-amber-500/40 transition-colors"
+              className="text-xs px-2.5 py-1.5 rounded-lg border border-slate-800 bg-slate-900/90 text-slate-300 hover:text-amber-400 hover:border-amber-500/40 transition-colors active:scale-95 cursor-pointer min-h-[32px]"
             >
               {loc.name}
             </button>
@@ -172,7 +172,7 @@ export function LocationPickerInner({
           disabled={isLocating}
           variant="outline"
           size="sm"
-          className="gap-1.5 text-xs border-amber-500/30 text-amber-400 hover:bg-amber-500/10 h-8 shrink-0"
+          className="gap-1.5 text-xs border-amber-500/30 text-amber-400 hover:bg-amber-500/10 h-9 shrink-0 self-start sm:self-auto min-h-[36px]"
         >
           {isLocating ? (
             <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -184,7 +184,7 @@ export function LocationPickerInner({
       </div>
 
       {/* Map Container */}
-      <div className="relative h-72 sm:h-80 w-full rounded-2xl overflow-hidden border border-slate-800 shadow-inner">
+      <div className="relative h-60 sm:h-72 md:h-80 w-full rounded-2xl overflow-hidden border border-slate-800 shadow-inner">
         <MapContainer
           center={[latitude || DEFAULT_MAP_CENTER[0], longitude || DEFAULT_MAP_CENTER[1]]}
           zoom={DEFAULT_MAP_ZOOM}
@@ -209,7 +209,7 @@ export function LocationPickerInner({
         </MapContainer>
 
         {/* Location coordinates overlay badge */}
-        <div className="absolute bottom-3 left-3 z-[1000] px-3 py-1.5 rounded-xl bg-slate-950/90 border border-slate-800 backdrop-blur-md text-[11px] font-mono text-slate-300 flex items-center gap-2 shadow-lg">
+        <div className="absolute bottom-3 left-3 z-[1000] px-3 py-1.5 rounded-xl bg-slate-950/90 border border-slate-800 backdrop-blur-md text-[10px] sm:text-[11px] font-mono text-slate-300 flex items-center gap-1.5 sm:gap-2 shadow-lg">
           <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
           <span>
             {latitude.toFixed(4)}°N, {longitude.toFixed(4)}°E
@@ -223,8 +223,8 @@ export function LocationPickerInner({
         </div>
 
         {/* Instruction pill */}
-        <div className="absolute top-3 right-3 z-[1000] px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700 text-[11px] text-slate-300 backdrop-blur-md shadow-md pointer-events-none">
-          Click or drag pin to position
+        <div className="absolute top-3 right-3 z-[1000] px-2.5 py-1 rounded-full bg-slate-900/90 border border-slate-700 text-[10px] sm:text-[11px] text-slate-300 backdrop-blur-md shadow-md pointer-events-none">
+          Tap or drag pin
         </div>
       </div>
     </div>

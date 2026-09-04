@@ -76,18 +76,18 @@ export function IssueDetailCard({ issue }: IssueDetailCardProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 sm:space-y-6">
       {/* Main Issue Card */}
-      <div className="clay-card p-6 sm:p-8 space-y-6 border-white/5 relative">
+      <div className="clay-card p-4.5 sm:p-6 md:p-8 space-y-5 sm:space-y-6 border-white/5 relative">
         {/* Top Badges Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/5">
+        <div className="flex flex-wrap items-center justify-between gap-2.5 pb-4 border-b border-white/5">
           <div className="flex flex-wrap items-center gap-2">
             {/* Tracking ID with quick copy */}
             <button
               type="button"
               onClick={handleCopyTrackingId}
               title="Click to copy tracking ID"
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-400 font-mono text-xs sm:text-sm font-bold transition-all group clay-pill cursor-pointer active:scale-95"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-400 font-mono text-xs sm:text-sm font-bold transition-all group clay-pill cursor-pointer active:scale-95 min-h-[36px]"
             >
               <span>{trackingId}</span>
               {copiedTracking ? (
@@ -112,7 +112,7 @@ export function IssueDetailCard({ issue }: IssueDetailCardProps) {
         </div>
 
         {/* Title */}
-        <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-snug">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight leading-snug break-words">
           {issue.title}
         </h1>
 
@@ -122,7 +122,7 @@ export function IssueDetailCard({ issue }: IssueDetailCardProps) {
             <FileText className="w-4 h-4 text-amber-400" />
             <span>Description</span>
           </div>
-          <p className="text-slate-200 text-sm sm:text-base leading-relaxed whitespace-pre-wrap clay-inset p-4.5 rounded-2xl">
+          <p className="text-slate-200 text-sm sm:text-base leading-relaxed whitespace-pre-wrap clay-inset p-3.5 sm:p-4.5 rounded-2xl">
             {issue.description}
           </p>
         </div>
@@ -147,7 +147,7 @@ export function IssueDetailCard({ issue }: IssueDetailCardProps) {
         )}
 
         {/* Location Section */}
-        <div className="space-y-3 pt-2">
+        <div className="space-y-3 pt-1 sm:pt-2">
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400">
               <MapPin className="w-4 h-4 text-amber-400" />
@@ -157,7 +157,7 @@ export function IssueDetailCard({ issue }: IssueDetailCardProps) {
             <button
               type="button"
               onClick={handleCopyCoords}
-              className="text-[11px] font-mono text-slate-400 hover:text-amber-400 transition-colors flex items-center gap-1.5 bg-slate-900/80 px-2.5 py-1 rounded-full border border-white/10 clay-pill cursor-pointer active:scale-95"
+              className="text-[11px] font-mono text-slate-400 hover:text-amber-400 transition-colors flex items-center gap-1.5 bg-slate-900/80 px-2.5 py-1.5 rounded-full border border-white/10 clay-pill cursor-pointer active:scale-95 min-h-[32px]"
             >
               <span>
                 {issue.latitude.toFixed(6)}°N, {issue.longitude.toFixed(6)}°E
@@ -171,14 +171,14 @@ export function IssueDetailCard({ issue }: IssueDetailCardProps) {
           </div>
 
           {issue.location_name && (
-            <p className="text-sm font-medium text-slate-200 flex items-start gap-2">
+            <p className="text-xs sm:text-sm font-medium text-slate-200 flex items-start gap-2">
               <span className="text-slate-400 shrink-0">Address:</span>
-              <span>{issue.location_name}</span>
+              <span className="break-words">{issue.location_name}</span>
             </p>
           )}
 
           {/* Mini map */}
-          <div className="h-60 sm:h-72 w-full rounded-2xl overflow-hidden border border-white/10 shadow-lg">
+          <div className="h-52 sm:h-64 md:h-72 w-full rounded-2xl overflow-hidden border border-white/10 shadow-lg">
             <IssueMiniMap
               latitude={issue.latitude}
               longitude={issue.longitude}
@@ -190,8 +190,8 @@ export function IssueDetailCard({ issue }: IssueDetailCardProps) {
         </div>
 
         {/* Metadata Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-white/5 text-xs">
-          <div className="flex items-center gap-3 text-slate-400 clay-inset p-3.5 rounded-2xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 sm:pt-4 border-t border-white/5 text-xs">
+          <div className="flex items-center gap-3 text-slate-400 clay-inset p-3 sm:p-3.5 rounded-2xl">
             <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center text-amber-400 shrink-0 clay-icon-well">
               <Calendar className="w-4 h-4" />
             </div>
@@ -205,7 +205,7 @@ export function IssueDetailCard({ issue }: IssueDetailCardProps) {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 text-slate-400 clay-inset p-3.5 rounded-2xl">
+          <div className="flex items-center gap-3 text-slate-400 clay-inset p-3 sm:p-3.5 rounded-2xl">
             <div className="w-8 h-8 rounded-xl bg-purple-500/15 border border-purple-500/25 flex items-center justify-center text-purple-400 shrink-0 clay-icon-well">
               <Clock className="w-4 h-4" />
             </div>
@@ -221,13 +221,13 @@ export function IssueDetailCard({ issue }: IssueDetailCardProps) {
         </div>
 
         {/* Action Buttons Row */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/5">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-4 border-t border-white/5">
           <Button
             type="button"
             onClick={handleShare}
             variant="secondary"
             size="sm"
-            className="gap-2 text-xs rounded-xl"
+            className="gap-2 text-xs rounded-xl h-11 sm:h-9 min-h-[44px] sm:min-h-0 w-full sm:w-auto font-semibold"
           >
             {copiedLink ? (
               <Check className="w-3.5 h-3.5 text-emerald-400" />
@@ -237,10 +237,10 @@ export function IssueDetailCard({ issue }: IssueDetailCardProps) {
             <span>{copiedLink ? "Link Copied!" : "Share Issue"}</span>
           </Button>
 
-          <div className="flex items-center gap-2">
+          <div className="grid grid-cols-2 sm:flex sm:items-center gap-2">
             <Link
               href="/map"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-white/10 bg-slate-900/60 hover:bg-slate-800 text-xs font-semibold text-slate-300 hover:text-white transition-all clay-pill"
+              className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 sm:py-2 rounded-xl border border-white/10 bg-slate-900/60 hover:bg-slate-800 text-xs font-semibold text-slate-300 hover:text-white transition-all clay-pill min-h-[44px] sm:min-h-0 text-center"
             >
               <MapIcon className="w-3.5 h-3.5 text-amber-400" />
               <span>View On Map</span>
@@ -248,7 +248,7 @@ export function IssueDetailCard({ issue }: IssueDetailCardProps) {
 
             <Link
               href="/report"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-xs font-bold text-amber-400 transition-all clay-pill"
+              className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 sm:py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-xs font-bold text-amber-400 transition-all clay-pill min-h-[44px] sm:min-h-0 text-center"
             >
               <PlusCircle className="w-3.5 h-3.5" />
               <span>Report Another</span>

@@ -48,7 +48,7 @@ export default async function AdminLayout({
     <div className="flex h-screen bg-[#090d16] overflow-hidden">
       <AdminSidebar />
       <main className="flex-1 overflow-y-auto">
-        <div className="p-6 lg:p-8">{children}</div>
+        <div className="p-4 sm:p-6 lg:p-8 pt-18 sm:pt-18 lg:pt-8">{children}</div>
       </main>
     </div>
   );

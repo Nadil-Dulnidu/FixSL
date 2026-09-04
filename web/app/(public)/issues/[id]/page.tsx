@@ -67,29 +67,29 @@ export default async function PublicIssueDetailPage({
   const currentStep = ISSUE_STATUSES[issue.status]?.step || 1;
 
   return (
-    <div className="min-h-screen py-8 md:py-12 bg-[#090d16] text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+    <div className="min-h-screen py-5 sm:py-8 md:py-12 bg-[#090d16] text-white">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 space-y-5 sm:space-y-6">
         {/* Navigation Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs text-slate-400">
+        <div className="flex items-center gap-1.5 sm:gap-2 text-xs text-slate-400 overflow-x-auto pb-1">
           <Link
             href="/"
-            className="hover:text-amber-400 transition-colors flex items-center gap-1"
+            className="hover:text-amber-400 transition-colors flex items-center gap-1 shrink-0"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Home</span>
           </Link>
-          <ChevronRight className="w-3 h-3 text-slate-600" />
-          <Link href="/map" className="hover:text-amber-400 transition-colors">
+          <ChevronRight className="w-3 h-3 text-slate-600 shrink-0" />
+          <Link href="/map" className="hover:text-amber-400 transition-colors shrink-0">
             Map
           </Link>
-          <ChevronRight className="w-3 h-3 text-slate-600" />
-          <span className="text-amber-400 font-mono font-semibold">
+          <ChevronRight className="w-3 h-3 text-slate-600 shrink-0" />
+          <span className="text-amber-400 font-mono font-semibold truncate">
             {trackingId}
           </span>
         </div>
 
         {/* 2-Column Responsive Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           {/* Main Left Column (8 cols): Issue Card */}
           <div className="lg:col-span-8 space-y-6">
             <IssueDetailCard issue={issue} />

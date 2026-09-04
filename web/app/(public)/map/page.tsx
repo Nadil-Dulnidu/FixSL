@@ -171,7 +171,7 @@ export default async function MapPage() {
   }
 
   return (
-    <div className="h-[calc(100vh-4rem)]">
+    <div className="h-[calc(100dvh-5rem)] sm:h-[calc(100vh-5.5rem)] px-2.5 sm:px-6 lg:px-8 py-2 sm:py-3 max-w-7xl mx-auto w-full">
       <MapPageClient initialIssues={issues} initialStats={stats} />
     </div>
   );
