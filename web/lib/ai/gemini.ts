@@ -97,11 +97,11 @@ export function mapAIToFixSLPriority(aiPriority: string): "low" | "medium" | "hi
  */
 export async function analyzeIssueWithAI(params: AnalyzeIssueParams): Promise<AnalyzeIssueResult> {
   const apiKey =
-    process.env.GEMINI_API_KEY ||
-    process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+    (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim()) ||
+    (process.env.GOOGLE_GENERATIVE_AI_API_KEY && process.env.GOOGLE_GENERATIVE_AI_API_KEY.trim());
 
   if (!apiKey) {
-    logger.warn("GEMINI_API_KEY not found in environment variables");
+    logger.warn("GEMINI_API_KEY not found or empty in environment variables");
     throw new Error("GEMINI_API_KEY is not configured.");
   }
 

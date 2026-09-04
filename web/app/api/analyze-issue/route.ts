@@ -21,7 +21,35 @@ const requestSchema = z.object({
 
 export async function POST(req: NextRequest) {
   try {
-    const rawBody = await req.json();
+    const apiKey =
+      (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim()) ||
+      (process.env.GOOGLE_GENERATIVE_AI_API_KEY &&
+        process.env.GOOGLE_GENERATIVE_AI_API_KEY.trim());
+
+    if (!apiKey) {
+      return NextResponse.json(
+        {
+          success: false,
+          error:
+            "AI analysis requires a configured GEMINI_API_KEY in your web/.env file. You can continue submitting your report manually.",
+        },
+        { status: 503 }
+      );
+    }
+
+    let rawBody;
+    try {
+      rawBody = await req.json();
+    } catch {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Invalid JSON request body",
+        },
+        { status: 400 }
+      );
+    }
+
     const parseResult = requestSchema.safeParse(rawBody);
 
     if (!parseResult.success) {
@@ -64,15 +92,11 @@ export async function POST(req: NextRequest) {
       error: error instanceof Error ? error.message : String(error),
     });
 
-    const isApiKeyMissing =
-      error instanceof Error && error.message.includes("GEMINI_API_KEY");
-
     return NextResponse.json(
       {
         success: false,
-        error: isApiKeyMissing
-          ? "AI analysis requires a configured GEMINI_API_KEY. You can continue submitting the report manually."
-          : "AI analysis is temporarily unavailable. You can continue submitting the report manually.",
+        error:
+          "AI analysis is temporarily unavailable. You can continue submitting your report manually.",
       },
       { status: 500 }
     );
