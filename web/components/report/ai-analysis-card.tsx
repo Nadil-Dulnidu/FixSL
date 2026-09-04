@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import {
   Sparkles,
+  Bot,
   Loader2,
   Check,
   AlertCircle,
@@ -161,7 +162,7 @@ export function AIAnalysisCard({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/5">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-sm shadow-amber-500/20">
-            <Sparkles className="w-4 h-4 animate-pulse" />
+            <Bot className="w-4 h-4" />
           </div>
           <div>
             <h4 className="text-sm font-bold text-white flex items-center gap-2">
@@ -191,7 +192,7 @@ export function AIAnalysisCard({
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
-            <span>✨ Analyze with AI</span>
+            <span>Analyze with AI</span>
           </Button>
         )}
       </div>
@@ -207,10 +208,7 @@ export function AIAnalysisCard({
       {/* Loading State */}
       {loading && (
         <div className="py-6 flex flex-col items-center justify-center gap-3 text-center animate-in fade-in duration-300">
-          <div className="relative">
-            <div className="w-10 h-10 rounded-full border-2 border-amber-500/30 border-t-amber-400 animate-spin" />
-            <Sparkles className="w-4 h-4 text-amber-400 absolute inset-0 m-auto animate-pulse" />
-          </div>
+          <div className="w-10 h-10 rounded-full border-2 border-amber-500/30 border-t-amber-400 animate-spin" />
           <div className="space-y-1">
             <p className="text-sm font-semibold text-white">Analyzing issue with Gemini 3.6 AI...</p>
             <p className="text-xs text-slate-400">

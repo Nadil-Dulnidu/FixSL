@@ -15,7 +15,8 @@ export function HeroSection() {
 
         {/* Main Headline */}
         <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.15] sm:leading-[1.1] max-w-4xl mx-auto">
-          Report Hazards.{" "}
+          Report Hazards.
+          <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500">
             Fix Sri Lanka&apos;s
           </span>{" "}
